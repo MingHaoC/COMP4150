@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="chen1fl.myweb.cs.uwindsor.ca" id="b5ca7949-f9de-4e11-a22d-b0e4155976d8" port="22" nameFormat="DESCRIPTIVE" username="chen1fl" />
+    </configs>
+  </component>
+</project>
