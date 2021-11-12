@@ -28,4 +28,15 @@ class ProjectView extends Project
 
     }
 
+    public function showAddProjectFields()
+    {
+        echo "<form id='addProjectForm' method='post'>
+            <input type='text' name='Pname' placeholder='Project Name' required/>
+            <input type='text' name='Plocation' placeholder='Project Location' required/>
+            <input type='number' maxlength='2' name='Dnum' placeholder='Assigned Department' required/>
+            </form>
+         <button form='addProjectForm' name='submit' type='submit'>Submit</button>";
+
+    }
+
 }

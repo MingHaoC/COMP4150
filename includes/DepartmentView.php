@@ -3,6 +3,9 @@
 class DepartmentView extends Department
 {
 
+    /**
+     *
+     */
     public function showAllDepartments()
     {
         $datas = $this->getAllDepartments();
@@ -26,6 +29,9 @@ class DepartmentView extends Department
         echo "</table>";
     }
 
+    /**
+     * @param $Dnumber
+     */
     public function showEditableDepartmentFields($Dnumber)
     {
 
@@ -49,6 +55,10 @@ class DepartmentView extends Department
 
     }
 
+
+    /**
+     *
+     */
     public function showAddDepartmentFields()
     {
         echo "<form id='addDepartmentForm' method='post'>
@@ -59,5 +69,26 @@ class DepartmentView extends Department
          <button form='addDepartmentForm' name='submit' type='submit'>Submit</button>";
 
     }
+
+    /**
+     *
+     */
+    public function showAllDepartments_reducedTable(){
+
+        $datas = $this->getAllDepartments();
+        echo "<div style='width: 80%; margin: 2rem auto;'><h3>Departments</h3> <table id='department' style='margin: 0 auto;'><tr><th>Department Name</th><th>Department No.</th><th>Location</th></tr>";
+        foreach ($datas as $data) {
+            // output data of each row
+            echo "<tr>";
+            echo
+                "<td>" . $data["Dname"] . "</td>" .
+                "<td>" . $data["Dnumber"] . "</td>" .
+                "<td>" . $data["Dlocation"] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table> </div>";
+
+    }
+
 
 }

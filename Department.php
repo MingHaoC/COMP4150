@@ -6,8 +6,7 @@ include 'includes/DepartmentView.php';
 include 'includes/Manager.php';
 include 'includes/ManagerView.php';
 
-
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }
 
@@ -17,13 +16,9 @@ $managers = new ManagerView();
 
 <!doctype html>
 <html>
-
 <head>
-
     <link rel="stylesheet" href="index.css">
-
 </head>
-
 <body style="background-color: #f2f2f2">
 
 <h1 style="margin: 0 4rem 2rem 4rem">
@@ -50,9 +45,9 @@ $managers = new ManagerView();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $request = [
-                    "Dname" => $_POST["Dname"],
-                    "Dlocation" => $_POST["Dlocation"],
-                    "ManagerID" => $_POST["ManagerID"],
+                "Dname" => $_POST["Dname"],
+                "Dlocation" => $_POST["Dlocation"],
+                "ManagerID" => $_POST["ManagerID"],
 
             ];
             $departments->addDepartment($request);
@@ -67,7 +62,6 @@ $managers = new ManagerView();
         $departments->showAllDepartments();
         ?>
     </div>
-
 
 
 </div>
