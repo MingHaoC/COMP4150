@@ -1,5 +1,9 @@
 <?php
 
+include 'includes/DBConnection.php';
+include 'includes/Department.php';
+include 'includes/DepartmentView.php';
+
 if(!isset($_SESSION)){
     session_start();
 }
@@ -11,11 +15,13 @@ if(!isset($_SESSION)){
 
 <head>
 
+    <link rel="stylesheet" href="index.css">
+
 </head>
 
 <body style="background-color: #f2f2f2">
 
-<h1 style="margin: 0 4rem; ">
+<h1 style="margin: 0 4rem 2rem 4rem">
     Departments
 
     <span style="float: right; margin: 0 4rem;">
@@ -27,6 +33,13 @@ if(!isset($_SESSION)){
     </span>
 
 </h1>
+
+<div style="width: 50%; margin: auto">
+     <?php
+     $departments = new DepartmentView();
+     $departments->showAllDepartments();
+     ?>
+</div>
 
 </body>
 

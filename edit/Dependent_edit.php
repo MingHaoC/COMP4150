@@ -1,7 +1,7 @@
-1``<?php
+<?php
 include 'includes/DBConnection.php';
-include 'includes/Employee.php';
-include 'includes/EmployeeView.php';
+include 'includes/Dependent.php';
+include 'includes/DependentView.php';
 
 //start session
 if (!isset($_SESSION)) {
@@ -13,50 +13,7 @@ if (!isset($_SESSION)) {
 <html lang="">
 
 <head>
-    <style>
-        input {
-            width: 100%;
-            display: inline-block;
-            margin: 0 0 1rem 0;
-        }
-
-        .container {
-            padding: 0 2rem 2rem 2rem;
-
-        }
-
-        /* Modal Content/Box */
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-            border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
-        }
-
-        /* Add Zoom Animation */
-        .animate {
-            -webkit-animation: animatezoom 0.6s;
-            animation: animatezoom 0.6s
-        }
-
-        @-webkit-keyframes animatezoom {
-            from {
-                -webkit-transform: scale(0)
-            }
-            to {
-                -webkit-transform: scale(1)
-            }
-        }
-
-        @keyframes animatezoom {
-            from {
-                transform: scale(0)
-            }
-            to {
-                transform: scale(1)
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="edit.css">
 </head>
 
 <body>
@@ -64,22 +21,21 @@ if (!isset($_SESSION)) {
     <div class='container'>
         <h3>Edit Employee</h3>
         <!-- form to edit manager -->
-        <form id='editEmployeeForm' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <form id='editDepartmentForm' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <?
-            $EditManager = new EmployeeView();
-            $get_Ssn = $_GET["key"];
-            $post_Ssn = $_POST["key"];
-            if ($get_Ssn) {
-                $EditManager->showEditableEmployeeFields($get_Ssn);
-            } else if ($post_Ssn) {
-                $EditManager->showEditableEmployeeFields($post_Ssn);
+            $EditDepartment = new DepartmentView();
+            $get_Dnumber = $_GET["key"];
+            $post_Dnumber = $_POST["key"];
+            if ($get_Dnumber) {
+                $EditDepartment->showEditableDepartmentFields($get_Dnumber);
+            } else if ($post_Dnumber) {
+                $EditDepartment->showEditableDepartmentFields($post_Dnumber);
             } else {
-                Header("Location:Manager.php");
+                Header("Location:Department.php");
             }
             ?>
 
         </form>
-        <button form='editEmployeeForm' name='key' value="987654321" type='submit'>Submit</button>
         <button type='button' onclick="document.location.href='Manager.php'">Cancel</button>
         <?
         if ($_SERVER["REQUEST_METHOD"] == "POST") {

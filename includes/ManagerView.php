@@ -6,7 +6,7 @@ class ManagerView extends Manager
     {
         $datas = $this->getAllManager();
         echo "<form id='demoteUserForm' method='POST'></form>";
-        echo "<form id='editManagerForm' action='Manager_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th><th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Action</th></tr>";
+        echo "<form id='editManagerForm' action='edit/Manager_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th><th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Action</th></tr>";
         foreach ($datas as $data) {
             // output data of each row
             echo "<tr>";
