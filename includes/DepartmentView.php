@@ -14,9 +14,9 @@ class DepartmentView extends Department
             echo "<tr>";
             echo "<td>" .$data["Dname"] . "</td>".
                 "<td>" . $data["Dnumber"]. "</td>".
-                "<td>" . $this->getDepartmentLocation($data["Dnumber"]) . "</td>".
-                "<td>" . $data["Dname"]. "</td>".
-                "<td>" . $data["Dname"]. "</td>".
+                "<td>" . $data["Dlocation"] . "</td>".
+                "<td>" . $this->getManagerName($data["ManagerID"]). "</td>".
+                "<td>" . $data["ManagerID"]. "</td>".
                 "<td>
                     <button type='submit' form='editDepartmentForm' name='key' value=" . $data["Dnumber"] . ">Edit</button></form>
                 </td>";
@@ -47,6 +47,15 @@ class DepartmentView extends Department
 
     }
 
+    public function showAddDepartmentFields(){
 
+        echo "<form id='addDepartmentForm' method='post'>
+            <input type='text' name='Dname' placeholder='Department Name' required/>
+            <input type='text' name='Dlocation' placeholder='Location' required/>
+            <input type='text' name='ManagerID' placeholder='ManagerID in Charge' required/>
+        </form>
+         <button form='addDepartmentForm' name='submit' type='submit'>Submit</button>";
+
+    }
 
 }

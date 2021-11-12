@@ -3,11 +3,16 @@
 include 'includes/DBConnection.php';
 include 'includes/Department.php';
 include 'includes/DepartmentView.php';
+include 'includes/Manager.php';
+include 'includes/ManagerView.php';
+
 
 if(!isset($_SESSION)){
     session_start();
 }
 
+$departments = new DepartmentView();
+$managers = new ManagerView();
 ?>
 
 <!doctype html>
@@ -34,11 +39,37 @@ if(!isset($_SESSION)){
 
 </h1>
 
-<div style="width: 50%; margin: auto">
-     <?php
-     $departments = new DepartmentView();
-     $departments->showAllDepartments();
-     ?>
+<div class="row">
+
+    <div class="column" style="width: 30%;">
+        <h3>Add a Department</h3>
+        <?php
+        $departments->showAddDepartmentFields();
+        $managers->showAllManagers_reducedTable();
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            $request = [
+                    "Dname" => $_POST["Dname"],
+                    "Dlocation" => $_POST["Dlocation"],
+                    "ManagerID" => $_POST["ManagerID"],
+
+            ];
+            $departments->addDepartment($request);
+        }
+
+        ?>
+    </div>
+
+    <div class="column" style="width: 50%; margin: 0 1rem;">
+        <h3>View Departments</h3>
+        <?php
+        $departments->showAllDepartments();
+        ?>
+    </div>
+
+
+
 </div>
 
 </body>

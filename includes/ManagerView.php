@@ -6,7 +6,7 @@ class ManagerView extends Manager
     {
         $datas = $this->getAllManager();
         echo "<form id='demoteUserForm' method='POST'></form>";
-        echo "<form id='editManagerForm' action='edit/Manager_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th><th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Action</th></tr>";
+        echo "<form id='editManagerForm' action='Manager_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th><th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Action</th></tr>";
         foreach ($datas as $data) {
             // output data of each row
             echo "<tr>";
@@ -28,6 +28,25 @@ class ManagerView extends Manager
         }
         echo "</table> </form>";
     }
+
+    public function showAllManagers_reducedTable(){
+
+        $datas = $this->getAllManager();
+        echo " <div style='width: 80%; margin: 2rem auto;'><h3>Managers</h3> <table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>LName</th><th>SSN</th><th>ManagerID</th></tr>";
+        foreach ($datas as $data) {
+            // output data of each row
+            echo "<tr>";
+            echo
+                "<td>" . $data["Fname"] . "</td>" .
+                "<td>" . $data["Lname"] . "</td>" .
+                "<td>" . $data["Ssn"] . "</td>".
+                "<td>" . $this->getManagerID($data["Ssn"]) . "</td>";
+            echo "</tr>";
+        }
+        echo "</table> </div>";
+
+    }
+
 
     public function demoteManager($ssn) {
 
