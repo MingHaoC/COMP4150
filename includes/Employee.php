@@ -26,7 +26,7 @@ class Employee extends DBConnection
         $sql = "Select * from UW_EMPLOYEE WHERE Ssn = '$ssn' AND Password = '$password'";
         $result = $this->connect()->query($sql);
         if($result->num_rows > 0)
-            header("Location:Manager.php");
+            header("Location:index.php");
          else
             echo "<h2 style='color: #bb0a0a;text-align: center;'> Error: You have enter an invalid credentials </h2>";
     }
