@@ -26,6 +26,16 @@ class DepartmentView extends Department
         echo "</table>";
     }
 
+    public function showAllDepartmentWithNoManager()
+    {
+        $datas = $this->getAllDepartments();
+        echo "<select name='cars' id='cars'>";
+        foreach($datas as $data) {
+            echo "<option value='". $data['Dno'] ."'>". $data["Dname"] ."</option>";
+        }
+        "</select>";
+    }
+
     public function showEditableDepartmentFields($Dnumber)
     {
 

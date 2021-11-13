@@ -1,7 +1,11 @@
 <?php
-include 'includes/DBConnection.php';
-include 'includes/Department.php';
-include 'includes/DepartmentView.php';
+require_once "../includes/DBConnection.php";
+require_once "../includes/Department.php";
+require_once "../includes/DepartmentView.php";
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 //start session
 if (!isset($_SESSION)) {
@@ -19,18 +23,21 @@ if (!isset($_SESSION)) {
 <body>
 
 <div class='modal-content animate'>
+
     <div class='container'>
 
         <h3>Edit Department</h3>
         <!-- form to edit department -->
         <?php
-        echo "test";
+
+
         $department = new DepartmentView();
-        echo "test";
         $department->showEditableDepartmentFields(5);
+
         ?>
-    test
+
     </div>
+
 </div>
 </body>
 

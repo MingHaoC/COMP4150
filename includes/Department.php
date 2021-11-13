@@ -8,14 +8,28 @@ class Department extends DBConnection
      */
     public function getDepartment($Dno)
     {
-        $sql = "SELECT * FROM UW_DEPARTMENTS WHERE Dnumber = " . $Dno;
+        $sql = "SELECT * FROM UW_DEPARTMENT WHERE Dnumber = $Dno";
         $result = $this->connect()->query($sql);
+
         if ($result->num_rows > 0) {
             if ($row = $result->fetch_assoc()) {
                 return $row;
             }
         }
         return "N/A";
+    }
+
+    public function getAllDepartmentWithNoManager()
+    {
+        $sql = "SELECT * FROM UW_DEPARTMENT WHERE ManagerID = null";
+        $result = $this->connect()->query($sql);
+
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                return $row;
+            }
+        }
+        return [];
     }
 
     /**
@@ -101,14 +115,12 @@ class Department extends DBConnection
     public function getManagerName($managerid): string
     {
         $sql = "SELECT * FROM UW_EMPLOYEE WHERE Ssn = (SELECT Mgr_ssn FROM UW_MANAGER
-                WHERE ManagerID = " . $managerid . ")";
+                WHERE ManagerID = $managerid)";
         $result = $this->connect()->query($sql);
-        if ($result->num_rows > 0) {
-            if ($row = $result->fetch_assoc()) {
-                return $row["Fname"] . " " . $row["Lname"];
-            }
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row["Fname"] . " " . $row["Lname"];
         }
         return "N/A";
     }
-
 }

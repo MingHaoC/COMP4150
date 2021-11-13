@@ -1,7 +1,7 @@
 <?php
-include 'includes/DBConnection.php';
-include 'includes/Dependent.php';
-include 'includes/DependentView.php';
+require 'includes/DBConnection.php';
+require 'includes/Dependent.php';
+require 'includes/DependentView.php';
 
 //start session
 if (!isset($_SESSION)) {

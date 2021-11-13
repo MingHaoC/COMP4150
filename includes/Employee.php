@@ -2,6 +2,18 @@
 
 class Employee extends DBConnection
 {
+    protected function getAllEmployees() {
+        $sql = "SELECT * FROM UW_EMPLOYEE LEFT JOIN UW_MANAGER ON Ssn != Mgr_ssn";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return [];
+    }
+
     protected function getEmployee($ssn)
     {
         $sql = "SELECT * FROM UW_EMPLOYEE WHERE Ssn = $ssn";
