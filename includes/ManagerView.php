@@ -30,7 +30,7 @@ class ManagerView extends Manager
     }
 
     public function demoteManager($ssn) {
-
+        $this->executeDemoteManager($ssn);
     }
 
 

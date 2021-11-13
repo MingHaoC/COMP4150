@@ -82,7 +82,7 @@ if (!isset($_SESSION)) {
     </span>
 </h1>
 
-<div style="width: 50%; margin: auto">
+<div style="margin: auto">
 
     <!-- database display -->
     <?php
