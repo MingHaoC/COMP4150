@@ -8,7 +8,7 @@ if(!isset($_SESSION)){
 
 <!doctype html>
 <html>
-
+    <link rel="stylesheet" href="index.css">
 <head>
 
 </head>

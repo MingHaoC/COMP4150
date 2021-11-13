@@ -1,5 +1,9 @@
 <?php
 
+include 'includes/DBConnection.php';
+include 'includes/Dependent.php';
+include 'includes/DependentView.php';
+
 if(!isset($_SESSION)){
     session_start();
 }
@@ -8,14 +12,14 @@ if(!isset($_SESSION)){
 
 <!doctype html>
 <html>
-
+<link rel="stylesheet" href="index.css">
 <head>
 
 </head>
 
 <body style="background-color: #f2f2f2">
 
-<h1 style="margin: 0 4rem; ">
+<h1 style="margin: 0 4rem 2rem 4rem; ">
     Dependents
 
     <span style="float: right; margin: 0 4rem;">
@@ -27,6 +31,13 @@ if(!isset($_SESSION)){
     </span>
 
 </h1>
+
+<div style="width: 50%; margin: auto">
+    <?php
+    $dependents = new DependentView();
+    $dependents->showAllDependents();
+    ?>
+</div>
 
 </body>
 

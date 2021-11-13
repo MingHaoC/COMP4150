@@ -1,5 +1,9 @@
 <?php
 
+include 'includes/DBConnection.php';
+include 'includes/Project.php';
+include 'includes/ProjectView.php';
+
 if(!isset($_SESSION)){
     session_start();
 }
@@ -10,12 +14,12 @@ if(!isset($_SESSION)){
 <html>
 
 <head>
-
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body style="background-color: #f2f2f2">
 
-<h1 style="margin: 0 4rem; ">
+<h1 style="margin: 0 4rem 2rem 4rem; ">
    Projects
 
     <span style="float: right; margin: 0 4rem;">
@@ -27,6 +31,13 @@ if(!isset($_SESSION)){
     </span>
 
 </h1>
+
+<div style="width: 50%; margin: auto">
+    <?php
+    $projects = new ProjectView();
+    $projects->showAllProjects();
+    ?>
+</div>
 
 </body>
 

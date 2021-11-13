@@ -2,7 +2,7 @@
 
 class Manager extends DBConnection
 {
-    protected function getAllManager()
+    public function getAllManager()
     {
         $sql = "SELECT * FROM UW_EMPLOYEE RIGHT JOIN UW_MANAGER ON Ssn = Mgr_ssn";
         $result = $this->connect()->query($sql);
@@ -15,7 +15,7 @@ class Manager extends DBConnection
         return [];
     }
 
-    protected function executeDemoteManager($ssn)
+protected function executeDemoteManager($ssn)
     {
         // get managerID from UW_MANAGER table
         $sql = "SELECT * FROM UW_MANAGER WHERE Mgr_ssn = $ssn";
