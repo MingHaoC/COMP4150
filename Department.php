@@ -49,7 +49,7 @@ $managers = new ManagerView();
         <h3>Add a Department</h3>
         <?php
         $departments->showAddDepartmentFields();
-        $managers->showAllManagers_reducedTable();
+
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -71,8 +71,6 @@ $managers = new ManagerView();
         $departments->showAllDepartments();
         ?>
     </div>
-
-
 
 </div>
 

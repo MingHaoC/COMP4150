@@ -3,7 +3,7 @@
 class Employee extends DBConnection
 {
     protected function getAllEmployees() {
-        $sql = "SELECT * FROM UW_EMPLOYEE LEFT JOIN UW_MANAGER ON Ssn != Mgr_ssn";
+        $sql = "select Fname, Minit, Lname, Ssn, Bdate, Address, Sex, Salary, super_ssn from UW_DEPARTMENT RIGHT JOIN UW_EMPLOYEE ON Ssn = Mgr_ssn WHERE Mgr_ssn IS NULL";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -41,6 +41,21 @@ class Employee extends DBConnection
             header("Location:index.php");
          else
             echo "<h2 style='color: #bb0a0a;text-align: center;'> Error: You have enter an invalid credentials </h2>";
+    }
+
+    /**
+     * @param $managerid
+     * @return string
+     */
+    public function getManagerName($mgr_ssn): string
+    {
+        $sql = "SELECT * FROM UW_EMPLOYEE WHERE Ssn = $mgr_ssn";
+        $result = $this->connect()->query($sql);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row["Fname"] . " " . $row["Lname"];
+        }
+        return "N/A";
     }
 
 }

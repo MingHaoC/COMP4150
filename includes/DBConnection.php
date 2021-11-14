@@ -1,8 +1,8 @@
 <?php
 
-define('ROOTPATH', $_SERVER['DOCUMENT_ROOT']);
-require_once( realpath('/home/chen1fl/domains/chen1fl.myweb.cs.uwindsor.ca/public_html/COMP4150'.'/vendor/autoload.php') );
-$dotenv = Dotenv\Dotenv::createImmutable( realpath('/home/chen1fl/domains/chen1fl.myweb.cs.uwindsor.ca/public_html/COMP4150'));
+$root = str_replace("/index.php", "", realpath('index.php'));
+require_once( $root. "/vendor/autoload.php" );
+$dotenv = Dotenv\Dotenv::createImmutable( $root);
 $dotenv->safeLoad();
 
 class DBConnection

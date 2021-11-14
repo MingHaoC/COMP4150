@@ -21,14 +21,11 @@ class Department extends DBConnection
 
     public function getAllDepartmentWithNoManager()
     {
-        $sql = "SELECT * FROM UW_DEPARTMENT WHERE ManagerID = null";
+        $sql = "SELECT * FROM UW_DEPARTMENT WHERE Mgr_ssn IS NULL";
         $result = $this->connect()->query($sql);
-
-        if ($result->num_rows > 0) {
-            if ($row = $result->fetch_assoc()) {
-                return $row;
-            }
-        }
+        echo "<script>console.log('Debug Objects: num " . $result->num_rows . "' );</script>";
+        if ($result)
+            return $result;
         return [];
     }
 
@@ -47,22 +44,6 @@ class Department extends DBConnection
         }
         return [];
 
-    }
-
-    /**
-     * returns location of specified department
-     */
-    protected function getDepartmentLocation($Dno)
-    {
-
-        $sql = "SELECT * FROM UW_DEPT_LOCATIONS WHERE Dnumber = $Dno";
-        $result = $this->connect()->query($sql);
-        if ($result->num_rows > 0) {
-            if ($row = $result->fetch_assoc()) {
-                return $row["Dlocation"];
-            }
-        }
-        return "N/A";
     }
 
     /**
@@ -112,10 +93,9 @@ class Department extends DBConnection
      * @param $managerid
      * @return string
      */
-    public function getManagerName($managerid): string
+    public function getManagerName($mgr_ssn): string
     {
-        $sql = "SELECT * FROM UW_EMPLOYEE WHERE Ssn = (SELECT Mgr_ssn FROM UW_MANAGER
-                WHERE ManagerID = $managerid)";
+        $sql = "SELECT * FROM UW_EMPLOYEE WHERE Ssn = $mgr_ssn";
         $result = $this->connect()->query($sql);
         if ($result) {
             $row = $result->fetch_assoc();

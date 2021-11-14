@@ -2,6 +2,12 @@
 include 'includes/DBConnection.php';
 include 'includes/Department.php';
 include 'includes/DepartmentView.php';
+include 'includes/Manager.php';
+include 'includes/ManagerView.php';
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 //start session
 if (!isset($_SESSION)) {
@@ -69,28 +75,31 @@ if (!isset($_SESSION)) {
             ?>
         </h3>
 
+        <form id='PromoteEmployeeForm' method="POST">
+            <div>
+                <label>
+                    Select a department for the new manager to manage
+                </label>
+                <br>
+                <?
+                $ssn = $_GET["promote"];
+                $department = new DepartmentView();
+                $department->showAllDepartmentWithNoManager();
+                ?>
+            </div>
 
-        <div>
-            <label>
-                Select a department for the new manager to manage
-            </label>
-            <br>
-            <?
-            $ssn = $_GET["promote"];
-            $department = new DepartmentView();
-            $department->showAllDepartmentWithNoManager();
-            ?>
-        </div>
-
-        <!-- form to promote manager -->
-        <form id='PromoteEmployeeForm' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-
-
+            <button form='PromoteEmployeeForm' type='submit'>Submit</button>
+            <button type='button'onclick="document.location.href='Employee.php'">Cancel</button>
         </form>
-        <button form='editEmployeeForm' name='key' value="987654321" type='submit'>Submit</button>
-        <button type='button' onclick="document.location.href='Manager.php'">Cancel</button>
+        <!-- form to promote manager -->
+
         <?
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $ssn = $_GET["promote"];
+            $Dnumber = $_POST["department"];
+
+            $manager = new ManagerView();
+            $manager->assignNewManager($ssn, $Dnumber);
 
         }
         ?>

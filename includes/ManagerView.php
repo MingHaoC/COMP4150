@@ -29,27 +29,13 @@ class ManagerView extends Manager
         echo "</table> </form>";
     }
 
-    public function showAllManagers_reducedTable(){
-
-        $datas = $this->getAllManager();
-        echo " <div style='width: 80%; margin: 2rem auto;'><h3>Managers</h3> <table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>LName</th><th>SSN</th><th>ManagerID</th></tr>";
-        foreach ($datas as $data) {
-            // output data of each row
-            echo "<tr>";
-            echo
-                "<td>" . $data["Fname"] . "</td>" .
-                "<td>" . $data["Lname"] . "</td>" .
-                "<td>" . $data["Ssn"] . "</td>".
-                "<td>" . $this->getManagerID($data["Ssn"]) . "</td>";
-            echo "</tr>";
-        }
-        echo "</table> </div>";
-
-    }
-
-
     public function demoteManager($ssn) {
         $this->executeDemoteManager($ssn);
+    }
+
+    public function assignNewManager($ssn, $dnumber)
+    {
+        $this->executeAssignNewManager($ssn, $dnumber);
     }
 
 
