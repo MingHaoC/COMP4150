@@ -1,7 +1,9 @@
 <?php
+
 require_once "../includes/DBConnection.php";
 require_once "../includes/Department.php";
 require_once "../includes/DepartmentView.php";
+
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -32,9 +34,25 @@ if (!isset($_SESSION)) {
 
 
         $department = new DepartmentView();
-        $department->showEditableDepartmentFields(5);
+
+        if(isset($_POST[''])) {
+            $dno = $_POST["key"];
+        }else if(isset($_GET['key'])) {
+            $dno = $_GET["key"];
+        }
+
+        if (isset($dno)) {
+            $department->showEditableDepartmentFields($dno);
+        } else {
+            Header("Location:Department.php");
+        }
+
 
         ?>
+
+        <button form='editDepartmentForm' name='key' value="1" type='submit'>Submit</button>
+        <button type='button' onclick="document.location.href='Department.php'">Cancel</button>
+
 
     </div>
 

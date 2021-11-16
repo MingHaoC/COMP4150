@@ -2,10 +2,15 @@
 
 class DependentView extends Dependent
 {
-    public function showAllDependents(){
+
+    public function showAllDependents()
+    {
         $datas = $this->getAllDependents();
 
-        echo "<form id='editDepartmentForm' action='Dependent_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'>".
+
+        echo "<form id='editDependentForm' action='Dependent_edit.php' method='GET'>".
+            "<table id='dependent' style='margin: 0 auto;'>".
+
             "<tr><th>DependentID</th><th>Dependent Name</th><th>Sex</th><th>Bdate</th><th>Relationship</th><th>Dependee</th>".
             "<th>Action</th></tr>";
         foreach ($datas as $data) {
@@ -19,7 +24,7 @@ class DependentView extends Dependent
                 "<td>" . $this->getDependee($data["DependentID"]) . "</td>".
 
                 "<td>
-                    <button type='submit' form='editDepartmentForm' name='key' value=" . $data["Dnumber"] . ">Edit</button></form>
+                    <button type='submit' form='editDependentForm' name='key' value=" . $data["DependentID"] . ">Edit</button></form>
                 </td>";
             echo "</tr>";
         }
