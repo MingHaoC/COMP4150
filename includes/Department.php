@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 class Department extends DBConnection
 {
     /**
@@ -19,6 +23,9 @@ class Department extends DBConnection
         return "N/A";
     }
 
+    /**
+     * @return array|bool|mysqli_result
+     */
     public function getAllDepartmentWithNoManager()
     {
         $sql = "SELECT * FROM UW_DEPARTMENT WHERE Mgr_ssn IS NULL";
@@ -51,21 +58,20 @@ class Department extends DBConnection
      */
     public function addDepartment($request)
     {
+        $conn = $this->connect();
+
         $dname = $request["Dname"];
-        $super_ssn = $request["manager"];
-       // echo $request["manager"];
-        if(strlen($request["manager"]) > 0){
-            $sql = "INSERT INTO UW_DEPT_LOCATIONS (Dname, Mgr_ssn, Mgr_start_date)
-                    VALUES('$dname', '$super_ssn' , date(y-m-d))";
-        }else{
-            $sql = "INSERT INTO UW_DEPARTMENT (Dname) VALUES ('$dname')";
+        $dlocation = $request["Dlocation"];
+        // echo $request["manager"];
+
+        $sql = "INSERT INTO UW_DEPARTMENT (Dname) VALUES ('$dname')";
+        $result = $conn->query($sql);
+
+        if(strlen($request["Dlocation"]) > 0){
+            $dnum = $conn->insert_id;
+            $sql = "INSERT INTO UW_DEPT_LOCATIONS (Dnumber, Dlocation) VALUES('$dnum', '$dlocation')";
+            $conn->query($sql);
         }
-
-
-
-        $result = $this->connect()->query($sql);
-
-        echo $result;
 
         if ($result) {
             echo "<h2 style='color: #0abb0a;text-align: center; '>New Department created successfully!</h2>";
@@ -103,6 +109,9 @@ class Department extends DBConnection
         return [];
     }
 
+    /**
+     * @return array
+     */
     public function getAllManagersWithNoDepartment(): array
     {
         $sql = "select Fname, Minit, Lname, Ssn, Bdate, Address, Sex, Salary, super_ssn from UW_DEPARTMENT RIGHT JOIN UW_EMPLOYEE ON Ssn = Mgr_ssn WHERE Mgr_ssn IS NOT NULL";
@@ -121,23 +130,17 @@ class Department extends DBConnection
      */
     public function removeDepartment($dno){
 
-        echo $dno;
 
         if(isset($dno)){
             $sql = "delete from UW_DEPT_LOCATIONS where Dnumber =" . $dno;
             if($this->connect()->query($sql)){
-                echo "s1";
                 $sql = "delete from UW_EMPLOYEE_DEPARTMENT where Dnno = " . $dno;
                 if($this->connect()->query($sql)){
-                    echo "s2";
-
                     $sql = "select * from UW_PROJECT where Dnum = ". $dno;
                     $projects = $this->connect()->query($sql);
-
                     foreach ($projects as $project){
                         $sql = "delete from UW_WORKS_ON where Pno = ". $project["Pnumber"];
                         if($this->connect()->query($sql)){
-                            echo "s3";
                         }else{
                             echo "f3";
                         }
@@ -145,7 +148,6 @@ class Department extends DBConnection
 
                     $sql = "delete from UW_PROJECT where Dnum = " . $dno;
                     if($this->connect()->query($sql)){
-                        echo "s4";
                         $sql = "delete from UW_DEPARTMENT where Dnumber = " . $dno;
                         if($this->connect()->query($sql)){
                             echo "<h2 style='color: #0abb0a;text-align: center; '>Deleted</h2>";
@@ -168,8 +170,11 @@ class Department extends DBConnection
 
     }
 
-    public function getAllDepartmentLocations(){
-
+    /**
+     * @return array of the locations
+     */
+    public function getAllDepartmentLocations(): array
+    {
         $sql = "SELECT * FROM UW_DEPT_LOCATIONS";
 
         $result = $this->connect()->query($sql);
@@ -181,6 +186,93 @@ class Department extends DBConnection
         }
         return [];
 
+    }
+
+    /**
+     * @param $dno
+     * @return array
+     */
+    public function getDepartmentEmployees($dno): array
+    {
+
+        $sql = "SELECT * FROM UW_EMPLOYEE_DEPARTMENT WHERE Dnno = " . $dno;
+
+        $result = $this->connect()->query($sql);
+
+        if(!$result){
+            return [];
+        }
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        } else {
+            return [];
+        }
+    }
+
+    /**
+     * @param $dno
+     * @return array
+     */
+    public function getDepartmentLocations($dno): array
+    {
+
+        $sql = "SELECT * FROM UW_DEPT_LOCATIONS WHERE Dnumber = " . $dno;
+        $result = $this->connect()->query($sql);
+
+        if(!$result){
+            return [];
+        }
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        } else {
+            return [];
+        }
+    }
+
+    /**
+     * @param $request
+     */
+    public function removeLocationFromDepartment($request){
+        $conn = $this->connect();
+        $dno = $request['Dnum'];
+        $dlocation = $request['Dlocation'];
+
+        $sql = "DELETE FROM UW_DEPT_LOCATIONS WHERE Dnumber = '$dno' AND Dlocation = '$dlocation'";
+
+        if($conn->query($sql)){
+            echo("success");
+        }else{
+            echo("Error: " . $conn -> error);
+        }
+    }
+
+    /**
+     * @param $request
+     */
+    public function addLocationToDepartment($request){
+
+        $conn = $this->connect();
+
+        $dno = $request["Dnum"];
+        $dlocation = $request["Dlocation"];
+
+        $sql = "INSERT INTO UW_DEPT_LOCATIONS(Dnumber, Dlocation) VALUES('$dno', '$dlocation')";
+
+        if($conn->query($sql)){
+            echo "success";
+        }else{
+            echo("Error: " . $conn -> error);
+        }
     }
 
 }

@@ -45,10 +45,13 @@ class DepartmentView extends Department
 
         $department = $this->getDepartment($Dnumber);
 
+        echo "<form id='editDeptEmployees' action='Dept_Employees_edit.php' method='GET'></form>";
+        echo "<form id='editDeptLocations' action='Dept_Location_edit.php' method='GET'></form>";
+
         echo "<H4> You are editing Department: #". $department["Dnumber"] . " " . $department["Dname"]
             . "<span style='float: right;'>
-                <button type='button'>Dept_Employees</button>
-                <button type='button'>Dept_Locations</button>
+                <button type='submit' name='edit_deptEmployees' value=$Dnumber form='editDeptEmployees'>Dept_Employees</button>
+                <button type='submit' name='edit_deptLocations' value=$Dnumber form='editDeptLocations'>Dept_Locations</button>
             </span>";
 
         //  <Label>Department Location: <input type='text' name='edit_dlocation' value='". $this->getDepartmentLocation($Dnumber) . "' required /></Label>
@@ -60,18 +63,16 @@ class DepartmentView extends Department
 
     public function showAddDepartmentFields()
     {
-        $datas = $this->getAllManagersWithNoDepartment();
-
-        //get all employees that are not a manager
-
         echo "<form id='addDepartmentForm' method='post'>
                 <input type='text' name='Dname' placeholder='Department Name' required/>
-                <input type='text' name='Dlocation' placeholder='Department Location' required/>
+                <input type='text' name='Dlocation' placeholder='Department Location'/>
             </form>
             <button style='margin: 1rem auto;' form='addDepartmentForm' name='submit' type='submit'>Submit</button>";
     }
 
-    public function showDepartmentLocations(){
+
+
+    public function showAllDepartmentLocations(){
 
         $datas = $this->getAllDepartmentLocations();
 
@@ -85,6 +86,72 @@ class DepartmentView extends Department
             echo "</tr>";
         }
         echo "</table>";
+
+    }
+
+    /**
+     * PLAN
+    show table on left with employees that belong
+    show table on rigth with employees that do NOT belong
+    have add/remove buttons in the tables
+     */
+    public function showDepartmentEmployees($dno){
+
+        $datas = $this->getDepartmentEmployees($dno);
+
+        echo "<table id='department' style='margin: 0 auto;'>" .
+            "<tr><th>Department No.</th><th>Location</th></tr>
+             <th>Action</th>";
+        foreach ($datas as $data) {
+            // output data of each row
+            echo "<tr>";
+
+            echo "</tr>";
+        }
+        echo "</table>";
+
+    }
+
+
+
+    /**
+     * PLAN
+    show table of locations
+    have field to add new location
+    have button in table to remove location
+     */
+    public function showDepartmentLocations($dno){
+
+        $datas = $this->getDepartmentLocations($dno);
+
+        echo "<form id='deleteLocationForm' method='POST'></form>";
+
+        echo "<table id='department' style='margin: 0 auto;'>" .
+            "<tr><th>Department No.</th><th>Location</th>
+             <th>Action</th></tr>";
+        foreach ($datas as $data) {
+            // output data of each row
+            echo "<tr>".
+                "<td>" . $data["Dnumber"] . "</td>" .
+                "<td>" . $data["Dlocation"] . "</td>".
+                "<td> 
+                     <button type='submit' form='deleteLocationForm' name='delete' value=" . $data["Dnumber"] . "-" . $data["Dlocation"]  . ">Remove</button>
+                </td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+
+    }
+
+    /**
+     *
+     */
+    public function showAddLocation(){
+
+        echo "<form id='addLocationToDepartmentForm' method='post'>
+                    <input style='width: 60%;' type='text' name='Dlocation' placeholder='Department Location' required/>
+                    </form>
+                    <button form='addLocationToDepartmentForm' name='addLocation' type='submit'>Submit</button>";
 
     }
 

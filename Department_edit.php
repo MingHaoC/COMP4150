@@ -1,9 +1,8 @@
 <?php
 
-require_once "../includes/DBConnection.php";
-require_once "../includes/Department.php";
-require_once "../includes/DepartmentView.php";
-
+require_once "includes/DBConnection.php";
+require_once "includes/Department.php";
+require_once "includes/DepartmentView.php";
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -13,6 +12,9 @@ error_reporting(E_ALL);
 if (!isset($_SESSION)) {
     session_start();
 }
+
+$department = new DepartmentView();
+
 ?>
 
 <!doctype html>
@@ -20,6 +22,7 @@ if (!isset($_SESSION)) {
 
 <head>
     <link rel="stylesheet" href="edit.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
@@ -31,9 +34,6 @@ if (!isset($_SESSION)) {
         <h3>Edit Department</h3>
         <!-- form to edit department -->
         <?php
-
-
-        $department = new DepartmentView();
 
         if(isset($_POST[''])) {
             $dno = $_POST["key"];
@@ -47,12 +47,12 @@ if (!isset($_SESSION)) {
             Header("Location:Department.php");
         }
 
-
         ?>
-
+        <br/>
         <button form='editDepartmentForm' name='key' value="1" type='submit'>Submit</button>
         <button type='button' onclick="document.location.href='Department.php'">Cancel</button>
 
+        <hr/>
 
     </div>
 

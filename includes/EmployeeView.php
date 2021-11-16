@@ -11,9 +11,10 @@ class EmployeeView extends Employee
         $datas = $this->getAllEmployees();
 
         echo "<form id='promoteUserForm' action='PromoteEmployee.php' method='GET'></form>";
-
         echo "<form id='deleteUserForm' method='POST'></form>";
-        echo "<form id='editManagerForm' action='Employee_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th><th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Manager</th><th>Action</th></tr>";
+        echo "<form id='editManagerForm' action='Employee_edit.php' method='GET'>";
+        echo "<table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th>
+              <th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Manager</th><th>Action</th></tr>";
 
         foreach ($datas as $data) {
             // output data of each row
