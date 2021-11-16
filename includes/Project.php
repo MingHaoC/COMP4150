@@ -3,7 +3,7 @@
 class Project extends DBConnection
 {
 
-    protected function getAllProjects(): array
+    public function getAllProjects(): array
     {
         $sql = "SELECT * FROM UW_PROJECT";
         $result = $this->connect()->query($sql);

@@ -6,7 +6,7 @@ class ProjectView extends Project
     public function showAllProjects(){
         $datas = $this->getAllProjects();
 
-        echo "<form id='editProjectForm' action='edit/Project_edit.php' method='GET'>
+        echo "<form id='editProjectForm' action='Project_edit.php' method='GET'>
             <table id='project' style='margin: 0 auto;'>".
             "<tr><th>Project Name</th><th>Project No.</th><th>Location</th><th>Department Name</th><th>Department No.</th>".
             "<th>Action</th></tr>";

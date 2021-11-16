@@ -32,7 +32,7 @@ class Department extends DBConnection
     /**
      * @return array
      */
-    protected function getAllDepartments()
+    public function getAllDepartments()
     {
         $sql = "SELECT * FROM UW_DEPARTMENT";
         $result = $this->connect()->query($sql);

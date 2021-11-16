@@ -23,13 +23,13 @@ if (!isset($_SESSION)) {
         <!-- form to edit manager -->
         <form id='editEmployeeForm' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <?
-            $EditManager = new EmployeeView();
+            $EditEmployee = new EmployeeView();
             $get_Ssn = $_GET["key"];
             $post_Ssn = $_POST["key"];
             if ($get_Ssn) {
-                $EditManager->showEditableEmployeeFields($get_Ssn);
+                $EditEmployee->showEditableEmployeeFields($get_Ssn);
             } else if ($post_Ssn) {
-                $EditManager->showEditableEmployeeFields($post_Ssn);
+                $EditEmployee->showEditableEmployeeFields($post_Ssn);
             } else {
                 Header("Location:Manager.php");
             }
@@ -37,11 +37,11 @@ if (!isset($_SESSION)) {
 
         </form>
         <button form='editEmployeeForm' name='key' value="987654321" type='submit'>Submit</button>
-        <button type='button' onclick="document.location.href='Manager.php'">Cancel</button>
+        <button type='button' onclick="document.location.href='Employee.php'">Cancel</button>
         <?
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $employee = new Employee();
-            $employee->updatedEmployee($_POST["ssn"], $_POST["edit_fname"], $_POST["edit_minit"], $_POST["edit_lname"], $_POST["edit_bdate"], $_POST["edit_address"], $_POST["edit_sex"], $_POST["edit_salary"]);
+            $employee->updatedEmployee($_POST["ssn"], $_POST["edit_fname"], $_POST["edit_minit"], $_POST["edit_lname"], $_POST["edit_bdate"], $_POST["edit_address"], $_POST["edit_sex"], $_POST["edit_salary"], $_POST["edit_super_ssn"]);
         }
         ?>
     </div>

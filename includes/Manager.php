@@ -92,12 +92,8 @@ class Manager extends DBConnection
 
         // create the update string and commit the update
         $sql = "UPDATE UW_EMPLOYEE SET super_ssn = $super_ssn WHERE ssn = $ssn";
-        $result = $this->connect()->query($sql);
-        if ($result)
-            return true;
-        else
-            echo "<h3>$db->error</h3>";
-        return false;
+        $this->connect()->query($sql);
+        return true;
     }
 
 }

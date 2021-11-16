@@ -7,7 +7,7 @@ class DepartmentView extends Department
     {
         $datas = $this->getAllDepartments();
 
-        echo "<form id='editDepartmentForm' action='edit/Department_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'>" .
+        echo "<form id='editDepartmentForm' action='Department_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'>" .
             "<tr><th>Department Name</th><th>Department No.</th><th>Manager Name</th><th>Manager ID</th><th>Mgr Start Date</th><th>Action</th>";
         foreach ($datas as $data) {
             // output data of each row

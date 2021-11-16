@@ -5,7 +5,7 @@ class DependentView extends Dependent
     public function showAllDependents(){
         $datas = $this->getAllDependents();
 
-        echo "<form id='editDepartmentForm' action='edit/Dependent_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'>".
+        echo "<form id='editDepartmentForm' action='Dependent_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'>".
             "<tr><th>DependentID</th><th>Dependent Name</th><th>Sex</th><th>Bdate</th><th>Relationship</th><th>Dependee</th>".
             "<th>Action</th></tr>";
         foreach ($datas as $data) {
