@@ -1,7 +1,9 @@
 <?php
-include "includes/DBConnection.php";
-include "includes/Department.php";
-include "includes/DepartmentView.php";
+
+require_once "../includes/DBConnection.php";
+require_once "../includes/Department.php";
+require_once "../includes/DepartmentView.php";
+
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -30,6 +32,7 @@ if (!isset($_SESSION)) {
         <!-- form to edit department -->
         <?php
 
+
         $department = new DepartmentView();
 
         if(isset($_POST[''])) {
@@ -49,6 +52,7 @@ if (!isset($_SESSION)) {
 
         <button form='editDepartmentForm' name='key' value="1" type='submit'>Submit</button>
         <button type='button' onclick="document.location.href='Department.php'">Cancel</button>
+
 
     </div>
 

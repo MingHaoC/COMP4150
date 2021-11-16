@@ -94,7 +94,6 @@ class Manager extends DBConnection
         $sql = "UPDATE UW_EMPLOYEE SET super_ssn = $super_ssn WHERE ssn = $ssn";
         $this->connect()->query($sql);
         return true;
-
     }
 
 }

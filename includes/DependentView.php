@@ -7,8 +7,10 @@ class DependentView extends Dependent
     {
         $datas = $this->getAllDependents();
 
+
         echo "<form id='editDependentForm' action='Dependent_edit.php' method='GET'>".
             "<table id='dependent' style='margin: 0 auto;'>".
+
             "<tr><th>DependentID</th><th>Dependent Name</th><th>Sex</th><th>Bdate</th><th>Relationship</th><th>Dependee</th>".
             "<th>Action</th></tr>";
         foreach ($datas as $data) {

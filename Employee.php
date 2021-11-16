@@ -1,12 +1,12 @@
 <?php
-include "includes/DBConnection.php";
-include "includes/Employee.php";
-include "includes/EmployeeView.php";
+require "includes/DBConnection.php";
+require "includes/Employee.php";
+require "includes/EmployeeView.php";
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }
-
+$employeeView = new EmployeeView();
 ?>
 
 <!doctype html>
@@ -30,15 +30,34 @@ if(!isset($_SESSION)){
     </span>
 </h1>
 
-<h1 style="margin: 0 4rem; ">
+<div class="row">
 
 
-    <?
-        $employee = new EmployeeView();
-        $employee->ShowAllEmployee();
-    ?>
+    <div class="column" style="width: 30%;">
+        <h3>Add an employee</h3>
+        <?
+        $employeeView->showAddEmployee();
+        ?>
+    </div>
 
-</h1>
+    <div class="column" style="width: 60%; margin: 0 1rem;">
+        <h3>View Employee</h3>
+        <?
+        $employeeView->ShowAllEmployee();
+        ?>
+    </div>
+    <div class="column" style="width: 100%; color: red">
+        <?
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if ($_POST["delete"])
+                $employeeView->deleteEmployee($_POST["delete"]);
+            else {
+                $employeeView->addEmployee($_POST["Fname"], $_POST["Minit"], $_POST["Lname"], $_POST["SSN"], $_POST["Password"], $_POST["Bdate"], $_POST["Address"], $_POST["Sex"], $_POST["Salary"], $_POST["Super_ssn"], $_POST["Department"], $_POST["Pno"]);
+            }
+        }
+        ?>
+    </div>
+    <div>
 
 </body>
 
