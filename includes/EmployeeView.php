@@ -8,7 +8,7 @@ class EmployeeView extends Employee
         $datas = $this->getAllEmployees();
 
         echo "<form id='promoteUserForm' action='PromoteEmployee.php' method='GET'></form>";
-        echo "<form id='editManagerForm' action='Manager_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th><th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Manager</th><th>Action</th></tr>";
+        echo "<form id='editEmployeeForm' action='Employee_edit.php' method='GET'><table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th><th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Manager</th><th>Action</th></tr>";
         foreach ($datas as $data) {
             // output data of each row
             echo "<tr>";
@@ -23,7 +23,7 @@ class EmployeeView extends Employee
                 "<td>" . $data["Salary"] . "</td>" .
                 "<td>" . $this->getManagerName($data["super_ssn"]) . "</td>" .
                 "<td>
-                    <button type='submit' form='editManagerForm' name='key' value=" . $data["Ssn"] . ">Edit</button>
+                    <button type='submit' form='editEmployeeForm' name='key' value=" . $data["Ssn"] . ">Edit</button>
                      <button type='submit' form='promoteUserForm' name='promote' value=" . $data["Ssn"] . " style='background-color: lightgreen'>Promote</button>
                     </form>
                 </td>";

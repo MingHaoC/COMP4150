@@ -31,7 +31,7 @@ if (!isset($_SESSION)) {
             } else if ($post_Ssn) {
                 $EditManager->showEditableEmployeeFields($post_Ssn);
             } else {
-                Header("Location:Manager.php");
+                Header("Location:Employee.php");
             }
             ?>
 

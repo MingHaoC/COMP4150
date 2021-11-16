@@ -1,14 +1,10 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-include 'includes/DBConnection.php';
-include 'includes/Department.php';
-include 'includes/DepartmentView.php';
-include 'includes/Manager.php';
-include 'includes/ManagerView.php';
+require 'includes/DBConnection.php';
+require 'includes/Department.php';
+require 'includes/DepartmentView.php';
+require 'includes/Manager.php';
+require 'includes/ManagerView.php';
 
 
 if(!isset($_SESSION)){
@@ -45,20 +41,18 @@ $managers = new ManagerView();
 
 <div class="row">
 
-    <div class="column" style="width: 30%;">
+    <div class="column" style="width: 20%;">
         <h3>Add a Department</h3>
         <?php
         $departments->showAddDepartmentFields();
-
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $request = [
                     "Dname" => $_POST["Dname"],
-                    "Dlocation" => $_POST["Dlocation"],
-                    "ManagerID" => $_POST["ManagerID"],
-
+                    "Dlocation" => $_POST["Dlocation"]
             ];
+
             $departments->addDepartment($request);
         }
 
@@ -69,7 +63,25 @@ $managers = new ManagerView();
         <h3>View Departments</h3>
         <?php
         $departments->showAllDepartments();
+
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+            $dno = $_GET["delete"];
+
+            $departments->removeDepartment($dno);
+
+        }
+
         ?>
+    </div>
+
+    <div class="column" style="width: 25%;">
+        <h3>Department Locations</h3>
+        <?php
+        $departments->showDepartmentLocations();
+
+        ?>
+
     </div>
 
 </div>
