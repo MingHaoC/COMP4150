@@ -6,7 +6,6 @@ require 'includes/DepartmentView.php';
 require 'includes/Manager.php';
 require 'includes/ManagerView.php';
 
-
 if(!isset($_SESSION)){
     session_start();
 }
@@ -64,7 +63,7 @@ $managers = new ManagerView();
         <?php
         $departments->showAllDepartments();
 
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["delete"])) {
 
             $dno = $_GET["delete"];
 
@@ -78,7 +77,7 @@ $managers = new ManagerView();
     <div class="column" style="width: 25%;">
         <h3>Department Locations</h3>
         <?php
-        $departments->showDepartmentLocations();
+        $departments->showAllDepartmentLocations();
 
         ?>
 

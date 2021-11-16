@@ -25,7 +25,7 @@ if (!isset($_SESSION)) {
         <!-- form to edit manager -->
         <form id='editDependentForm' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-            <?
+            <?php
             $EditDepartment = new DepartmentView();
             $get_Dnumber = $_GET["key"];
             $post_Dnumber = $_POST["key"];
@@ -41,7 +41,7 @@ if (!isset($_SESSION)) {
         </form>
 
         <button type='button' onclick="document.location.href='Dependent.php'">Cancel</button>
-        <?
+        <?php
 //        if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //            $employee = new Employee();
 //            $employee->updatedEmployee($_POST["ssn"], $_POST["edit_fname"], $_POST["edit_minit"], $_POST["edit_lname"], $_POST["edit_bdate"], $_POST["edit_address"], $_POST["edit_sex"], $_POST["edit_salary"]);
