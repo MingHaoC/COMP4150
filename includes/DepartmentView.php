@@ -12,7 +12,6 @@ class DepartmentView extends Department
         echo "<table id='department' style='margin: 0 auto;'>" .
             "<tr><th>Department Name</th><th>Department No.</th><th>Manager Name</th><th>Manager ID</th><th>Mgr Start Date</th>".
             "<th>Action</th></tr>";
-
         foreach ($datas as $data) {
             // output data of each row
             echo "<tr>";
@@ -154,9 +153,6 @@ class DepartmentView extends Department
                     <button form='addLocationToDepartmentForm' name='addLocation' type='submit'>Submit</button>";
 
     }
-
-
-
 
 
 }

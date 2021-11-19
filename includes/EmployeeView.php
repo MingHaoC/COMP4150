@@ -55,7 +55,7 @@ class EmployeeView extends Employee
         $project = new Project();
         $projects = $project->getAllProjects();
 
-        echo "<form id='addDepartmentForm' method='POST'>
+        echo "<form id='addEmployeeForm' method='POST'>
             <input type='text' name='Fname' placeholder='First name' required/>
             <input type='text' name='Minit' placeholder='Middle initials' required/>
             <input type='text' name='Lname' placeholder='Last Name' required/>
@@ -78,7 +78,7 @@ class EmployeeView extends Employee
             echo "<option value='" . $proj['Pnumber'] . "'>" . $proj["Pname"] . "</option>";
         echo "</select></Lable>";
         echo "</form>
-              <button form='addDepartmentForm' name='submit' type='submit'>Submit</button>";
+              <button form='addEmployeeForm' name='submit' type='submit'>Submit</button>";
     }
 
     public function addEmployee($fname, $minit, $lname, $ssn, $password, $bdate, $address, $sex, $salary, $super_ssn, $department, $pno)

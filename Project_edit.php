@@ -1,12 +1,19 @@
 <?php
-include 'includes/DBConnection.php';
-include 'includes/Employee.php';
-include 'includes/EmployeeView.php';
+require 'includes/DBConnection.php';
+require 'includes/Project.php';
+require 'includes/ProjectView.php';
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 //start session
 if (!isset($_SESSION)) {
     session_start();
 }
+
+$project = new ProjectView();
+
 ?>
 
 <!doctype html>
@@ -21,29 +28,21 @@ if (!isset($_SESSION)) {
     <div class='container'>
         <h3>Edit Project</h3>
         <!-- form to edit manager -->
-        <form id='editEmployeeForm' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <?
-            $EditManager = new EmployeeView();
-            $get_Ssn = $_GET["key"];
-            $post_Ssn = $_POST["key"];
-            if ($get_Ssn) {
-                $EditManager->showEditableEmployeeFields($get_Ssn);
-            } else if ($post_Ssn) {
-                $EditManager->showEditableEmployeeFields($post_Ssn);
-            } else {
-                Header("Location:Manager.php");
-            }
-            ?>
 
-        </form>
-        <button form='editEmployeeForm' name='key' value="987654321" type='submit'>Submit</button>
-        <button type='button' onclick="document.location.href='Manager.php'">Cancel</button>
-        <?
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $employee = new Employee();
-            $employee->updatedEmployee($_POST["ssn"], $_POST["edit_fname"], $_POST["edit_minit"], $_POST["edit_lname"], $_POST["edit_bdate"], $_POST["edit_address"], $_POST["edit_sex"], $_POST["edit_salary"]);
-        }
+        <?php
+
+            if(isset($_GET['key'])){
+                $pno = $_GET['key'];
+                echo $pno;
+            }
+
+            if(isset($pno)){
+                $project->showEditableProjectFields($pno);
+            }
         ?>
+
+        <button form='editProjectForm' name='key' value="987654321" type='submit'>Submit</button>
+        <button type='button' onclick="document.location.href='Project.php'">Cancel</button>
     </div>
 </div>
 </body>

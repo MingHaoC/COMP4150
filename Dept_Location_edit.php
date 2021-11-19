@@ -35,10 +35,10 @@ if(isset($_GET['edit_deptLocations'])) {
 <div class='modal-content animate'>
     <div class="container">
         <div class="row">
+            <form id="returnToDeptEdit" action="Department_edit.php" method="post"></form>
             <h3>
                 Department Locations
-                <form id="returnToDeptEdit" action="Department.php"></form>
-                <button style="float: right;" form="returnToDeptEdit">Back</button>
+                <button style="float: right;" name="backFromEditLocations" value=<?echo $dno?> form="returnToDeptEdit">Back</button>
             </h3>
             <div class="column" style="width: 30%; margin: 0 1rem;">
 

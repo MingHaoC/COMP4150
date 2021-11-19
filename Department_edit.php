@@ -15,6 +15,12 @@ if (!isset($_SESSION)) {
 
 $department = new DepartmentView();
 
+if(isset($_GET['key'])) {
+    $dno = $_GET["key"];
+}else if(isset($_POST['backFromEditLocations'])){
+    $dno = $_POST['backFromEditLocations'];
+}
+
 ?>
 
 <!doctype html>
@@ -35,12 +41,6 @@ $department = new DepartmentView();
         <!-- form to edit department -->
         <?php
 
-        if(isset($_POST[''])) {
-            $dno = $_POST["key"];
-        }else if(isset($_GET['key'])) {
-            $dno = $_GET["key"];
-        }
-
         if (isset($dno)) {
             $department->showEditableDepartmentFields($dno);
         } else {
@@ -49,7 +49,7 @@ $department = new DepartmentView();
 
         ?>
         <br/>
-        <button form='editDepartmentForm' name='key' value="1" type='submit'>Submit</button>
+        <button form='editDepartmentForm' name='key' value=$dno type='submit'>Submit</button>
         <button type='button' onclick="document.location.href='Department.php'">Cancel</button>
 
         <hr/>
