@@ -127,6 +127,8 @@ class Department extends DBConnection
 
     /**
      * @param $dno department to be deleted
+     *
+     * a bucnh of fk constraints need to be deleted first
      */
     public function removeDepartment($dno){
 
@@ -238,6 +240,7 @@ class Department extends DBConnection
             return [];
         }
     }
+
 
     /**
      * @param $request

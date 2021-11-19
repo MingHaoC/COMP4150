@@ -45,7 +45,7 @@ $managers = new ManagerView();
         <?php
         $departments->showAddDepartmentFields();
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
             $request = [
                     "Dname" => $_POST["Dname"],
@@ -64,11 +64,8 @@ $managers = new ManagerView();
         $departments->showAllDepartments();
 
         if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["delete"])) {
-
             $dno = $_GET["delete"];
-
             $departments->removeDepartment($dno);
-
         }
 
         ?>
