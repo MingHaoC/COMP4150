@@ -34,16 +34,12 @@ if(isset($_GET['key'])){
 <div class='modal-content animate'>
     <div class='container'>
         <h3>Edit Project</h3>
-        <!-- form to edit manager -->
-        <form id='editProjectForm' method="POST">
+
         <?php
             if(isset($pno)){
                 $project->showEditableProjectFields($pno);
             }
         ?>
-        </form>
-        <button form='editProjectForm' name='key' type='submit'>Submit</button>
-        <button type='button' onclick="document.location.href='Project.php'">Cancel</button>
 
         <?php
         if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['key'])){
@@ -54,6 +50,7 @@ if(isset($_GET['key'])){
                 "Dnum" => $_POST["edit_department"],
                 "Pnumber" => $pno
             ];
+            var_dump($request, isset($_POST['key']));
 
             $project = new Project();
             $project->updateProject($request);

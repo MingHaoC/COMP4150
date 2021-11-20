@@ -51,6 +51,19 @@ if (isset($_GET['edit_deptEmployees'])) {
 
                 $department->showEmployeesWorkingInDepartment($dno);
 
+                if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove_FromDepartment"])){
+                    $temp = $_POST["remove_FromDepartment"];
+                    $temp = explode("-", $temp);
+                    $ssn = $temp[0];
+                    $dno = $temp[1];
+
+                    $request = [
+                        "Essn" => $ssn,
+                        "Dnumber" => $dno
+                    ];
+                    $department->removeEmployeeFromDepartment($request);
+                }
+
                 ?>
 
             </div>
@@ -60,6 +73,21 @@ if (isset($_GET['edit_deptEmployees'])) {
                 <?php
 
                 $department->showEmployeesNotWorkingInDepartment($dno);
+
+                if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_ToDepartment"])){
+                    $temp = $_POST["add_ToDepartment"];
+                    $temp = explode("-", $temp);
+                    $ssn = $temp[0];
+                    $dno = $temp[1];
+
+                    $request = [
+                        "Essn" => $ssn,
+                        "Dnumber" => $dno
+                    ];
+
+                    $department->addEmployeeToDepartment($request);
+
+                }
 
                 ?>
 

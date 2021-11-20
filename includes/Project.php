@@ -137,8 +137,6 @@ class Project extends DBConnection
         $Dnum = $request['Dnum'];
         $Pno = $request['Pnumber'];
 
-        var_dump($Pname, $Plocation, $Dnum, $Pno);
-
         $conn = $this->connect();
 
         $sql = "UPDATE UW_PROJECT SET Pname = '$Pname', Plocation = '$Plocation', Dnum = '$Dnum' WHERE Pnumber = '$Pno'";
@@ -202,14 +200,13 @@ class Project extends DBConnection
         if($result){
             echo '<script type="text/javascript">';
             echo "alert('Employee #$Essn has been successfully added to Project #$Pno');";
-            echo 'window.location.href = "Project.php";';
-            echo '</script>';
         }else{
+
             echo '<script type="text/javascript">';
-            echo "alert('Employee #$Essn was not added to Project #$Pno');";
-            echo 'window.location.href = "Project.php";';
-            echo '</script>';
+            echo "alert(Error description: " . $conn -> error . ");";
         }
+        Header('Location: ' . $_SERVER['PHP_SELF']);
+        echo '</script>';
 
     }
 
@@ -223,17 +220,13 @@ class Project extends DBConnection
         $sql = "DELETE FROM UW_WORKS_ON WHERE Essn = '$Essn' AND Pno = '$Pno'";
             $result = $conn->query($sql);
 
+        echo '<script type="text/javascript">';
         if($result){
-            echo '<script type="text/javascript">';
             echo "alert('Employee #$Essn has been successfully removed from Project #$Pno');";
-            echo 'window.location.href = "Project.php";';
-            echo '</script>';
         }else{
-            echo '<script type="text/javascript">';
-            echo "alert('Employee #$Essn was not removed from Project #$Pno');";
-            echo 'window.location.href = "Project.php";';
-            echo '</script>';
+            echo "alert(Error description: " . $conn -> error . ");";
         }
+        echo '</script>';
 
     }
 }

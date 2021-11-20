@@ -38,23 +38,28 @@ if(isset($_GET['key'])) {
 <div class='modal-content animate'>
 
     <div class='container'>
+        <h3>Edit Project</h3>
+        <?php
+            if(isset($dno)){
 
-        <h3>Edit Department</h3>
-        <!-- form to edit department -->
+                $department->showEditableDepartmentFields($dno);
+            }
+            ?>
         <?php
 
-        if (isset($dno)) {
-            $department->showEditableDepartmentFields($dno);
-        } else {
-            Header("Location:Department.php");
+        if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['key'])){
+
+            $request = [
+                "Dname" => $_POST["edit_Dname"],
+                "Dnumber" => $dno
+            ];
+
+
+            $department = new Department();
+            $department->updateDepartment($request);
         }
 
         ?>
-        <br/>
-        <button form='editDepartmentForm' name='key' value=$dno type='submit'>Submit</button>
-        <button type='button' onclick="document.location.href='Department.php'">Cancel</button>
-
-        <hr/>
 
     </div>
 

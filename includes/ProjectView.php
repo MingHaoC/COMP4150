@@ -61,7 +61,6 @@ class ProjectView extends Project
         $project = $this->getProject($pno);
         $locations = $this->getAllLocations();
 
-
         echo "<H4> You are editing Project: #". $project["Pnumber"] . " " . $project["Pname"]
             . "<span style='float: right;'>
                 <form id='editProjectEmployeesForm' action='Project_Employees_Edit.php' method='GET'></form>
@@ -69,7 +68,9 @@ class ProjectView extends Project
                     <button form='editProjectEmployeesForm' name='edit_ProjectEmployeesForm' type='submit' value=$pno >Project Employees</button>    
             </span></H4>";
 
+        echo "<form id='editProjectForm' method='POST'>";
 
+        //
         echo "<Label>Project Name: <input type='text' name='edit_Pname' value='" . $project["Pname"] . "' required /></Label>";
 
         echo "<Lable>Location: <select style='margin: 4px auto' name='edit_Plocation' id='location'>";
@@ -81,6 +82,13 @@ class ProjectView extends Project
         foreach ($departments as $dep)
             echo "<option value='" . $dep['Dnumber'] . "'>#" . $dep["Dnumber"] . " - " . $dep["Dname"] . "</option>";
         echo "</select></Lable><br/>";
+        //
+
+        echo "</form>
+                <button form='editProjectForm' name='key' type='submit'>Submit</button>
+                <button type='button' onclick='document.location.href=\"Project.php\"'>Cancel</button>";
+
+
 
 
     }
@@ -98,7 +106,7 @@ class ProjectView extends Project
             echo "<td>" . $data["Fname"] . " " . $data["Minit"] . " " . $data["Lname"] ."</td>" .
                 "<td>" . $data["Ssn"] . "</td>" .
                 "<td>
-                    <button type='submit' form='addToProject' name='add_ToProject' value=" . $data["Ssn"] . ">Add</button>
+                    <button type='submit' form='addToProject' name='add_ToProject' value=" . $data["Ssn"] . "-" . $pno . ">Add</button>
                 </td>";
             echo "</tr>";
         }
@@ -119,7 +127,7 @@ class ProjectView extends Project
             echo "<td>" . $data["Fname"] . " " . $data["Minit"] . " " . $data["Lname"] ."</td>" .
                 "<td>" . $data["Ssn"] . "</td>" .
                 "<td>
-                    <button type='submit' form='removeFromProject' name='remove_FromProject' value=" . $data["Ssn"] . ">Remove</button>
+                    <button type='submit' form='removeFromProject' name='remove_FromProject' value=" . $data["Ssn"] . "-" . $pno . ">Remove</button>
                 </td>";
             echo "</tr>";
         }

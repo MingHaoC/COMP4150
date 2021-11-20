@@ -32,7 +32,6 @@ if (!isset($_SESSION)) {
                 $EditEmployee->showEditableEmployeeFields($_POST["key"]);
             } else {
                 Header("Location:Manager.php");
-
             }
             ?>
 

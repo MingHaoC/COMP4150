@@ -47,6 +47,22 @@ if(isset($_GET['edit_ProjectEmployeesForm'])){
 
                 $project->showEmployeesWorkingOnProject($pno);
 
+                if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove_FromProject"])){
+                    echo $_POST["remove_FromProject"];
+                    $temp = $_POST["remove_FromProject"];
+                    $temp = explode("-", $temp);
+                    $ssn = $temp[0];
+                    $pno = $temp[1];
+
+                    $request = [
+                        "Essn" => $ssn,
+                        "Pnumber" => $pno
+                    ];
+
+                    print_r($request);
+                    $project->removeEmployeeFromProject($request);
+                    Header('Location: ' . $_SERVER['PHP_SELF']);
+                }
 
                 ?>
 
@@ -58,6 +74,22 @@ if(isset($_GET['edit_ProjectEmployeesForm'])){
 
                 $project->showEmployeesNotWorkingOnProject($pno);
 
+                if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_ToProject"])){
+                    echo $_POST["add_ToProject"];
+                    $temp = $_POST["add_ToProject"];
+                    $temp = explode("-", $temp);
+                    $ssn = $temp[0];
+                    $pno = $temp[1];
+
+                    $request = [
+                        "Essn" => $ssn,
+                        "Pnumber" => $pno
+                    ];
+
+                    print_r($request);
+                    $project->addEmployeeToProject($request);
+                    Header('Location: ' . $_SERVER['PHP_SELF']);
+                }
 
                 ?>
 
