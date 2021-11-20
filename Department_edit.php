@@ -19,6 +19,8 @@ if(isset($_GET['key'])) {
     $dno = $_GET["key"];
 }else if(isset($_POST['backFromEditLocations'])){
     $dno = $_POST['backFromEditLocations'];
+}else if(isset($_POST['backFromEditEmployees'])){
+    $dno = $_POST['backFromEditEmployees'];
 }
 
 ?>

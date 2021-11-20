@@ -44,19 +44,16 @@ class DepartmentView extends Department
 
         $department = $this->getDepartment($Dnumber);
 
+
         echo "<form id='editDeptEmployees' action='Dept_Employees_edit.php' method='GET'></form>";
         echo "<form id='editDeptLocations' action='Dept_Location_edit.php' method='GET'></form>";
-
         echo "<H4> You are editing Department: #". $department["Dnumber"] . " " . $department["Dname"]
             . "<span style='float: right;'>
                 <button type='submit' name='edit_deptEmployees' value=$Dnumber form='editDeptEmployees'>Dept_Employees</button>
                 <button type='submit' name='edit_deptLocations' value=$Dnumber form='editDeptLocations'>Dept_Locations</button>
-            </span>";
+            </span></H4>";
 
-        //  <Label>Department Location: <input type='text' name='edit_dlocation' value='". $this->getDepartmentLocation($Dnumber) . "' required /></Label>
-        //  <Label>Department Manager: <input type='text' readonly='readonly' name='edit_dmanager' value='". $this->getDepartmentManager() ."' required /></Label>";
-        echo "<br/><br/><Label>Department Name: <input type='text' name='edit_dname' value='". $department["Dname"] ."' required /></Label>";
-
+        echo "<Label>Department Name: <input type='text' name='edit_dname' value='". $department["Dname"] ."' required /></Label>";
 
     }
 
@@ -151,6 +148,47 @@ class DepartmentView extends Department
                     <input style='width: 60%;' type='text' name='Dlocation' placeholder='Department Location' required/>
                     </form>
                     <button form='addLocationToDepartmentForm' name='addLocation' type='submit'>Submit</button>";
+
+    }
+
+    public function showEmployeesNotWorkingInDepartment($dno){
+
+        $datas = $this->getEmployeesNotWorkingInDepartment($dno);
+
+        echo "<h3>Employees Not Working In This Department</h3><form id='AddToDepartment' method='POST'></form>";
+        echo "<table style='margin: 0 auto;'>" .
+            "<tr><th>Employee Name</th><th>Employee SSN</th><th>Action</th>";
+        foreach ($datas as $data) {
+            // output data of each row
+            echo "<tr>";
+            echo "<td>" . $data["Fname"] . " " . $data["Minit"] . " " . $data["Lname"] ."</td>" .
+                "<td>" . $data["Ssn"] . "</td>" .
+                "<td>
+                    <button type='submit' form='AddToDepartment' name='add_ToDepartment' value=" . $data["Ssn"] . ">Add</button>
+                </td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
+
+    public function showEmployeesWorkingInDepartment($dno){
+
+        $datas = $this->getEmployeesWorkingInDepartment($dno);
+
+        echo "<h3>Employees Working In This Department</h3><form id='removeFromDepartment' method='POST'></form>";
+        echo "<table style='margin: 0 auto;'>" .
+            "<tr><th>Employee Name</th><th>Employee SSN</th><th>Action</th>";
+        foreach ($datas as $data) {
+            // output data of each row
+            echo "<tr>";
+            echo "<td>" . $data["Fname"] . " " . $data["Minit"] . " " . $data["Lname"] ."</td>" .
+                "<td>" . $data["Ssn"] . "</td>" .
+                "<td>
+                    <button type='submit' form='removeFromDepartment' name='remove_FromDepartment' value=" . $data["Ssn"] . ">Remove</button>
+                </td>";
+            echo "</tr>";
+        }
+        echo "</table>";
 
     }
 

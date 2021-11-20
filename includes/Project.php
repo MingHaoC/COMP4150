@@ -110,8 +110,7 @@ class Project extends DBConnection
     /**
      * returns an array of all the locations, no duplicates
      */
-    public
-    function getAllLocations(): array
+    public function getAllLocations(): array
     {
         $sql = "SELECT DISTINCT Dlocation FROM UW_DEPT_LOCATIONS";
         $result = $this->connect()->query($sql);
@@ -131,4 +130,110 @@ class Project extends DBConnection
         }
     }
 
+    public function updateProject($request){
+
+        $Pname = $request['Pname'];
+        $Plocation = $request['Plocation'];
+        $Dnum = $request['Dnum'];
+        $Pno = $request['Pnumber'];
+
+        var_dump($Pname, $Plocation, $Dnum, $Pno);
+
+        $conn = $this->connect();
+
+        $sql = "UPDATE UW_PROJECT SET Pname = '$Pname', Plocation = '$Plocation', Dnum = '$Dnum' WHERE Pnumber = '$Pno'";
+        $result = $conn->query($sql);
+        if($result){
+            echo '<script type="text/javascript">';
+            echo "alert('Project with $Pno has been successfully updated');";
+            echo 'window.location.href = "Project.php";';
+            echo '</script>';
+        }else{
+            echo '<script type="text/javascript">';
+            echo "alert('Project with $Pno was NOT updated');";
+            echo 'window.location.href = "Project.php";';
+            echo '</script>';
+        }
+
+    }
+
+    public function getEmployeesNotWorkingOnProject($pno): array
+    {
+        $conn = $this->connect();
+
+        $sql = "SELECT * FROM UW_EMPLOYEE e LEFT JOIN UW_WORKS_ON w ON e.Ssn = w.Essn WHERE Pno != '$pno'";
+        $result = $conn->query($sql);
+        if($result){
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+                return $data;
+            }
+        }else{
+            echo("Error description: " . $conn -> error);
+        }
+        return [];
+    }
+
+    public function getEmployeesWorkingOnProject($pno): array
+    {
+        $sql = "SELECT * FROM UW_EMPLOYEE e LEFT JOIN UW_WORKS_ON w ON e.Ssn = w.Essn WHERE Pno = '$pno'";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return [];
+    }
+
+    public function addEmployeeToProject($request){
+
+        $conn = $this->connect();
+
+        $Essn = $request["Essn"];
+        $Pno = $request["Pnumber"];
+
+        $sql = "INSERT INTO UW_WORKS_ON(Essn, Pno) VALUES('$Essn', '$Pno')";
+        $result = $conn->query($sql);
+
+        if($result){
+            echo '<script type="text/javascript">';
+            echo "alert('Employee #$Essn has been successfully added to Project #$Pno');";
+            echo 'window.location.href = "Project.php";';
+            echo '</script>';
+        }else{
+            echo '<script type="text/javascript">';
+            echo "alert('Employee #$Essn was not added to Project #$Pno');";
+            echo 'window.location.href = "Project.php";';
+            echo '</script>';
+        }
+
+    }
+
+    public function removeEmployeeFromProject($request){
+
+        $conn = $this->connect();
+
+        $Essn = $request["Essn"];
+        $Pno = $request["Pnumber"];
+
+        $sql = "DELETE FROM UW_WORKS_ON WHERE Essn = '$Essn' AND Pno = '$Pno'";
+            $result = $conn->query($sql);
+
+        if($result){
+            echo '<script type="text/javascript">';
+            echo "alert('Employee #$Essn has been successfully removed from Project #$Pno');";
+            echo 'window.location.href = "Project.php";';
+            echo '</script>';
+        }else{
+            echo '<script type="text/javascript">';
+            echo "alert('Employee #$Essn was not removed from Project #$Pno');";
+            echo 'window.location.href = "Project.php";';
+            echo '</script>';
+        }
+
+    }
 }

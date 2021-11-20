@@ -278,4 +278,42 @@ class Department extends DBConnection
         }
     }
 
+    public function getEmployeesNotWorkingInDepartment($dno): array
+    {
+        $sql = "SELECT * FROM UW_EMPLOYEE e LEFT JOIN UW_EMPLOYEE_DEPARTMENT d ON e.Ssn = d.Ssn WHERE Dnno != '$dno'";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return [];
+
+    }
+
+    public function getEmployeesWorkingInDepartment($dno): array
+    {
+        $sql = "SELECT * FROM UW_EMPLOYEE e LEFT JOIN UW_EMPLOYEE_DEPARTMENT d ON e.Ssn = d.Ssn WHERE Dnno = '$dno'";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return [];
+
+    }
+
+    public function addEmployeeToDepartment($request){
+
+
+
+    }
+
+    public function removeEmployeeFromDepartment($request){
+
+    }
+
 }

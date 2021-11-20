@@ -1,24 +1,20 @@
 <?php
 
 require_once "includes/DBConnection.php";
-require_once "includes/Department.php";
-require_once "includes/DepartmentView.php";
+require_once "includes/Project.php";
+require_once "includes/ProjectView.php";
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//start session
-if (!isset($_SESSION)) {
-    session_start();
-}
 
-$department = new DepartmentView();
+$project = new ProjectView();
 
-if (isset($_GET['edit_deptEmployees'])) {
-    $dno = $_GET['edit_deptEmployees'];
-} else {
-    Header("Location:Department.php");
+if(isset($_GET['edit_ProjectEmployeesForm'])){
+    $pno = $_GET['edit_ProjectEmployeesForm'];
+}else{
+    Header("Location:Project.php");
 }
 
 ?>
@@ -37,11 +33,11 @@ if (isset($_GET['edit_deptEmployees'])) {
 
         <div class="row">
 
-            <form id="returnToDeptEdit" action="Department_edit.php" method="post"></form>
+            <form id="returnToProjectEdit" action="Project_edit.php" method="post"></form>
             <h3>
-                Department Locations
+                Project Employees
                 <button style="float: right;" name="backFromEditEmployees"
-                        value=<? echo $dno ?> form="returnToDeptEdit">Back
+                        value=<? echo $pno ?> form="returnToProjectEdit">Back
                 </button>
             </h3>
 
@@ -49,7 +45,8 @@ if (isset($_GET['edit_deptEmployees'])) {
 
                 <?php
 
-                $department->showEmployeesWorkingInDepartment($dno);
+                $project->showEmployeesWorkingOnProject($pno);
+
 
                 ?>
 
@@ -59,13 +56,16 @@ if (isset($_GET['edit_deptEmployees'])) {
 
                 <?php
 
-                $department->showEmployeesNotWorkingInDepartment($dno);
+                $project->showEmployeesNotWorkingOnProject($pno);
+
 
                 ?>
 
             </div>
 
+
         </div>
+
     </div>
 </div>
 
