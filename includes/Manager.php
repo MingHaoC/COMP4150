@@ -2,9 +2,9 @@
 
 class Manager extends DBConnection
 {
-    public function getAllManager()
+    public function getAllManager(): array
     {
-        $sql = "select Fname, Minit, Lname, Ssn, Bdate, Address, Sex, Salary, super_ssn from UW_DEPARTMENT RIGHT JOIN UW_EMPLOYEE ON Ssn = Mgr_ssn WHERE Mgr_ssn IS NOT NULL";
+        $sql = "SELECT  DISTINCT Fname, Minit, Lname, UW_EMPLOYEE.Ssn, Bdate, Address, Sex, Salary, super_ssn, Dname FROM UW_DEPARTMENT RIGHT JOIN UW_EMPLOYEE ON Ssn = Mgr_ssn LEFT JOIN UW_EMPLOYEE_DEPARTMENT ON UW_DEPARTMENT.Dnumber = UW_EMPLOYEE_DEPARTMENT.Dnno WHERE Mgr_ssn IS NOT NULL";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -94,6 +94,22 @@ class Manager extends DBConnection
         $sql = "UPDATE UW_EMPLOYEE SET super_ssn = $super_ssn WHERE ssn = $ssn";
         $this->connect()->query($sql);
         return true;
+    }
+
+    public function executeUpdatedManager($ssn, $fname, $minit, $lname, $bdate, $address, $sex, $salary, $super_ssn)
+    {
+        $super = $super_ssn === ''? 'null' : $super_ssn;
+        echo "<script>console.log('Debug Objects: " . $super . "' );</script>";
+        $sql = "UPDATE UW_EMPLOYEE SET Fname = '$fname', Minit = '$minit', Lname = '$lname', Bdate = '$bdate', Address = '$address', Sex='$sex', Salary='$salary', Super_ssn = $super WHERE Ssn = $ssn";
+        if (!$this->connect()->query($sql) === TRUE) {
+            echo "<br>Error: <br>" . $sql . "<br>";
+            return;
+        }
+
+        echo '<script type="text/javascript">';
+        echo "alert('Manager with $ssn has been successfully updated');";
+        echo 'window.location.href = "Manager.php";';
+        echo '</script>';
     }
 
 }

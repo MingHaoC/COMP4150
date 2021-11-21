@@ -9,7 +9,7 @@ class Employee extends DBConnection
      */
     protected function getAllEmployees(): array
     {
-        $sql = "select Fname, Minit, Lname, Ssn, Bdate, Address, Sex, Salary, super_ssn from UW_DEPARTMENT RIGHT JOIN UW_EMPLOYEE ON Ssn = Mgr_ssn WHERE Mgr_ssn IS NULL";
+        $sql = "select Fname, Minit, Lname, UW_EMPLOYEE.Ssn, Bdate, Address, Sex, Salary, super_ssn, Dnno from UW_DEPARTMENT RIGHT JOIN UW_EMPLOYEE ON Ssn = Mgr_ssn LEFT JOIN UW_EMPLOYEE_DEPARTMENT ON UW_EMPLOYEE.Ssn = UW_EMPLOYEE_DEPARTMENT.Ssn WHERE Mgr_ssn IS NULL";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -26,9 +26,9 @@ class Employee extends DBConnection
      * @param $ssn employee information to be fetch
      * @return array|null
      */
-    protected function getEmployee($ssn)
+    public function getEmployee($ssn)
     {
-        $sql = "SELECT * FROM UW_EMPLOYEE WHERE Ssn = $ssn";
+        $sql = "SELECT * FROM UW_EMPLOYEE LEFT JOIN UW_EMPLOYEE_DEPARTMENT ON UW_EMPLOYEE.Ssn = UW_EMPLOYEE_DEPARTMENT.Ssn WHERE UW_EMPLOYEE.Ssn = $ssn";
         $result = $this->connect()->query($sql);
         if ($result->num_rows > 0)
             return $result->fetch_assoc();
@@ -39,7 +39,7 @@ class Employee extends DBConnection
      * Used to get all manager assigned to a department
      * @return array
      */
-    protected function getAllManager(): array
+    public function getAllManager(): array
     {
         $sql = "select Mgr_ssn, CONCAT(Fname, CONCAT(' ', Lname)) as Name from UW_DEPARTMENT LEFT JOIN UW_EMPLOYEE ON Mgr_ssn = Ssn WHERE Mgr_ssn IS NOT NULL";
         $result = $this->connect()->query($sql);
@@ -57,7 +57,6 @@ class Employee extends DBConnection
     protected function executeAddEmployee($fname, $minit, $lname, $ssn, $password, $bdate, $address, $sex, $salary, $super_ssn): bool
     {
         $sql = "INSERT INTO UW_EMPLOYEE (Fname, Minit, Lname, Ssn, Password, Bdate, Address, Sex, Salary, Super_ssn) VALUES('$fname', '$minit', '$lname', $ssn, '$password', '$bdate', '$address', '$sex', $salary, $super_ssn)";
-        $db = $this->connect();
         return $this->connect()->query($sql);
     }
 
@@ -75,17 +74,25 @@ class Employee extends DBConnection
     }
 
     // following method will update basic employee information (info in UW_EMPLOYEE table)
-    public function updatedEmployee($ssn, $fname, $minit, $lname, $bdate, $address, $sex, $salary, $super_ssn)
+    public function updatedEmployee($ssn, $fname, $minit, $lname, $bdate, $address, $sex, $salary, $super_ssn, $department)
     {
         $sql = "UPDATE UW_EMPLOYEE SET Fname = '$fname', Minit = '$minit', Lname = '$lname', Bdate = '$bdate', Address = '$address', Sex='$sex', Salary='$salary', Super_ssn = $super_ssn WHERE Ssn = $ssn";
-        $conn = $this->connect();
-        if ($conn->query($sql) === TRUE) {
-            echo '<script type="text/javascript">';
-            echo "alert('Employee with $ssn has been successfully updated');";
-            echo 'window.location.href = "Employee.php";';
-            echo '</script>';
-        } else
-            echo "<br>Error: <br>" . $sql . "<br>" . $conn->error;
+        if (!$this->connect()->query($sql)) {
+            echo "<br>Error: <br>" . $sql . "<br>";
+            return;
+        }
+
+        $sql = "UPDATE UW_EMPLOYEE_DEPARTMENT SET Dnno = $department WHERE Ssn = $ssn";
+        if (!$this->connect()->query($sql)) {
+            echo "<br>Error: <br>" . $sql . "<br>";
+            return;
+        }
+
+        echo '<script type="text/javascript">';
+        echo "alert('Employee with $ssn has been successfully updated');";
+        echo 'window.location.href = "Manager.php";';
+        echo '</script>';
+
     }
 
     /**
@@ -145,6 +152,19 @@ class Employee extends DBConnection
             return $row["Fname"] . " " . $row["Lname"];
         }
         return "N/A";
+    }
+
+    protected function getDepartmentName($dnno)
+    {
+        if ($dnno) {
+            $sql = "SELECT Dname FROM UW_DEPARTMENT WHERE Dnumber = $dnno";
+            $result = $this->connect()->query($sql);
+            if ($result) {
+                $row = $result->fetch_assoc();
+                return $row["Dname"];
+            }
+            return "N/A";
+        } else return "N/A";
     }
 
 }

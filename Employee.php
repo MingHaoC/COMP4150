@@ -24,15 +24,12 @@ $employeeView = new EmployeeView();
     <span style="float: right; margin: 0 4rem;">
         <button class="center" name="submit" onClick="document.location.href='index.php'">Home</button>
         <button class="center" name="submit" onClick="document.location.href='Department.php'">Departments</button>
-        <button class="center" name="submit" onClick="document.location.href='Dependent.php'">Dependents</button>
         <button class="center" name="submit" onClick="document.location.href='Manager.php'">Manager</button>
         <button class="center" name="submit" onClick="document.location.href='Project.php'">Projects</button>
     </span>
 </h1>
 
 <div class="row">
-
-
     <div class="column" style="width: 30%;">
         <h3>Add an employee</h3>
         <?
@@ -46,6 +43,7 @@ $employeeView = new EmployeeView();
         $employeeView->ShowAllEmployee();
         ?>
     </div>
+
     <div class="column" style="width: 100%; color: red">
         <?
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
