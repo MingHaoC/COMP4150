@@ -47,21 +47,23 @@ $_SESSION['original_url'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     <div class='container'>
         <h3>Edit Employee</h3>
         <!-- form to edit manager -->
+
         <form id='editEmployeeForm' method="POST">
             <?
             $EditEmployee = new EmployeeView();
             if ($get_Ssn) {
                 $EditEmployee->showEditableEmployeeFields($get_Ssn);
             } else if ($_POST["key"]) {
+
                 $EditEmployee->showEditableEmployeeFields($_POST["key"]);
             } else {
                 Header("Location:Manager.php");
-
             }
             ?>
 
         </form>
         <button form='editEmployeeForm' name='key' value="987654321" type='submit'>Submit</button>
+
 
         <button type='button' onclick="document.location.href='Employee.php'" name="submitEdit">Cancel</button>
         <?

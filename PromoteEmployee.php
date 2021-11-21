@@ -89,7 +89,7 @@ if (!isset($_SESSION)) {
             </div>
 
             <button form='PromoteEmployeeForm' type='submit'>Submit</button>
-            <button type='button'onclick="document.location.href='Employee.php'">Cancel</button>
+            <button type='button' onclick="document.location.href='Employee.php'">Cancel</button>
         </form>
         <!-- form to promote manager -->
 
@@ -100,7 +100,6 @@ if (!isset($_SESSION)) {
 
             $manager = new ManagerView();
             $manager->assignNewManager($ssn, $Dnumber);
-
         }
         ?>
     </div>

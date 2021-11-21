@@ -15,12 +15,18 @@ if (!isset($_SESSION)) {
 
 $department = new DepartmentView();
 
+if (isset($_GET['edit_deptEmployees'])) {
+    $dno = $_GET['edit_deptEmployees'];
+} else {
+    Header("Location:Department.php");
+}
+
 ?>
 
 <!doctype html>
 <html>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="edit.css">
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="edit.css">
 <head>
 
 </head>
@@ -31,27 +37,63 @@ $department = new DepartmentView();
 
         <div class="row">
 
-            <h3>Department Employees</h3>
+            <form id="returnToDeptEdit" action="Department_edit.php" method="post"></form>
+            <h3>
+                Department Locations
+                <button style="float: right;" name="backFromEditEmployees"
+                        value=<? echo $dno ?> form="returnToDeptEdit">Back
+                </button>
+            </h3>
 
-            <div class="column" style="width: 30%; margin: 0 1rem;">
+            <div class="column" style="width: 46%; margin: 0 1rem;">
 
+                <?php
+
+                $department->showEmployeesWorkingInDepartment($dno);
+
+                if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove_FromDepartment"])){
+                    $temp = $_POST["remove_FromDepartment"];
+                    $temp = explode("-", $temp);
+                    $ssn = $temp[0];
+                    $dno = $temp[1];
+
+                    $request = [
+                        "Essn" => $ssn,
+                        "Dnumber" => $dno
+                    ];
+                    $department->removeEmployeeFromDepartment($request);
+                }
+
+                ?>
 
             </div>
 
-            <div class="column" style="width: 39%; margin: 0 1rem;">
+            <div class="column" style="width: 48%; margin: 0 1rem;">
 
+                <?php
 
+                $department->showEmployeesNotWorkingInDepartment($dno);
+
+                if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_ToDepartment"])){
+                    $temp = $_POST["add_ToDepartment"];
+                    $temp = explode("-", $temp);
+                    $ssn = $temp[0];
+                    $dno = $temp[1];
+
+                    $request = [
+                        "Essn" => $ssn,
+                        "Dnumber" => $dno
+                    ];
+
+                    $department->addEmployeeToDepartment($request);
+
+                }
+
+                ?>
 
             </div>
-
-            <div class="column" style="width: 30%; margin: 0 1rem;">
-
-
-            </div>
-
 
         </div>
-
     </div>
 </div>
 

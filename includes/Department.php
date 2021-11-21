@@ -237,11 +237,14 @@ class Department extends DBConnection
 
         $sql = "DELETE FROM UW_DEPT_LOCATIONS WHERE Dnumber = '$dno' AND Dlocation = '$dlocation'";
 
+        echo '<script type="text/javascript">';
         if($conn->query($sql)){
-            echo("success");
+            echo "alert('Location successfully added to Department #$dno');";
         }else{
-            echo("Error: " . $conn -> error);
+            echo "alert(Error description: " . $conn -> error . ");";
         }
+        echo '</script>';
+        Header('Location: ' . $_SERVER['PHP_SELF']);
     }
 
     /**
@@ -256,11 +259,107 @@ class Department extends DBConnection
 
         $sql = "INSERT INTO UW_DEPT_LOCATIONS(Dnumber, Dlocation) VALUES('$dno', '$dlocation')";
 
+        echo '<script type="text/javascript">';
         if($conn->query($sql)){
-            echo "success";
+            echo "alert('Location successfully added to Department #$dno');";
         }else{
-            echo("Error: " . $conn -> error);
+            echo "alert(Error description: " . $conn -> error . ");";
         }
+        echo '</script>';
+        Header('Location: ' . $_SERVER['PHP_SELF']);
+    }
+
+    public function getEmployeesNotWorkingInDepartment($dno): array
+    {
+        $sql = "SELECT * FROM UW_EMPLOYEE e LEFT JOIN UW_EMPLOYEE_DEPARTMENT d ON e.Ssn = d.Ssn WHERE Dnno != '$dno'";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return [];
+
+    }
+
+    public function getEmployeesWorkingInDepartment($dno): array
+    {
+        $sql = "SELECT * FROM UW_EMPLOYEE e LEFT JOIN UW_EMPLOYEE_DEPARTMENT d ON e.Ssn = d.Ssn WHERE Dnno = '$dno'";
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return [];
+
+    }
+
+    public function addEmployeeToDepartment($request){
+
+        print_r($request);
+
+        $conn = $this->connect();
+
+        $Essn = $request["Essn"];
+        $Dno = $request["Dnumber"];
+
+        $sql = "INSERT INTO UW_EMPLOYEE_DEPARTMENT(Ssn, Dnno) VALUES('$Essn', '$Dno')";
+        $result = $conn->query($sql);
+
+        echo '<script type="text/javascript">';
+        if($result){
+            echo "alert('Employee #$Essn has been successfully added to Department #$Dno');";
+        }else{
+            echo "alert(Error description: " . $conn -> error . ");";
+        }
+        echo '</script>';
+        Header('Location: ' . $_SERVER['PHP_SELF']);
+    }
+
+    public function removeEmployeeFromDepartment($request){
+
+        $conn = $this->connect();
+
+        $Essn = $request["Essn"];
+        $Dno = $request["Dnumber"];
+
+        $sql = "DELETE FROM UW_EMPLOYEE_DEPARTMENT WHERE Ssn = '$Essn' AND Dnno = '$Dno'";
+        $result = $conn->query($sql);
+
+        echo '<script type="text/javascript">';
+        if($result){
+            echo "alert('Employee #$Essn has been successfully removed from Department #$Dno');";
+        }else{
+            echo "alert(Error description: " . $conn -> error . ");";
+        }
+        echo '</script>';
+        Header('Location: ' . $_SERVER['PHP_SELF']);
+    }
+
+    public function updateDepartment($request){
+
+        print_r($request);
+
+        $dname = $request["Dname"];
+        $dno = $request["Dnumber"];
+
+        $conn = $this->connect();
+
+        $sql = "UPDATE UW_DEPARTMENT SET Dname = '$dname' WHERE Dnumber = '$dno'";
+        $result = $conn->query($sql);
+        if($result){
+            echo '<script type="text/javascript">';
+            echo "alert('Department #$dno has been successfully updated -- $dname');";
+        }else{
+            echo '<script type="text/javascript">';
+            echo "alert(Error description: " . $conn -> error . ");";
+        }
+        echo 'window.location.href = "Department.php";';
+        echo '</script>';
+
     }
 
 }
