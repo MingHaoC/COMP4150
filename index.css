@@ -14,6 +14,8 @@ input::-webkit-inner-spin-button {
 .column {
     float: left;
     text-align: center;
+    padding: 1rem;
+
 }
 
 input {

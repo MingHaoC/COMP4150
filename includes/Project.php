@@ -159,17 +159,35 @@ class Project extends DBConnection
     {
         $conn = $this->connect();
 
-        $sql = "SELECT * FROM UW_EMPLOYEE e LEFT JOIN UW_WORKS_ON w ON e.Ssn = w.Essn WHERE Pno != '$pno'";
-        $result = $conn->query($sql);
-        if($result){
+        $sql1 = "SELECT GROUP_CONCAT(e.Ssn) AS ssn FROM UW_EMPLOYEE e LEFT JOIN UW_WORKS_ON w ON e.Ssn = w.Essn WHERE Pno = '$pno'";
+        $result = $conn->query($sql1);
+
+        $row = $result->fetch_assoc();
+
+        if (is_null($row["ssn"])) {
+
+            $sql = "SELECT * FROM UW_EMPLOYEE";
+            $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $data[] = $row;
                 }
                 return $data;
             }
-        }else{
-            echo("Error description: " . $conn -> error);
+            return [];
+        }
+
+        $ssn = $row["ssn"];
+        $ssn = str_replace(",", " AND ssn != ", $ssn);
+        $sql2 = "SELECT * FROM UW_EMPLOYEE WHERE Ssn != $ssn";
+
+        $result = $conn->query($sql2);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
         }
         return [];
     }

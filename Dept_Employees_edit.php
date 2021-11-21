@@ -86,7 +86,6 @@ if (isset($_GET['edit_deptEmployees'])) {
                     ];
 
                     $department->addEmployeeToDepartment($request);
-
                 }
 
                 ?>
