@@ -20,4 +20,19 @@ class DBConnection
         $this->dbname = $_ENV['DB_USER'];
         return new mysqli($this->servername, $this->username, $this->password, $this->dbname);
     }
+
+    protected function getStarQuery($sql) {
+        $result = $this->connect()->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return [];
+    }
+
+    protected function executeQuery($sql): bool{
+
+    }
 }

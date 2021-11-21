@@ -1,12 +1,25 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include 'includes/DBConnection.php';
 include 'includes/Employee.php';
 include 'includes/EmployeeView.php';
+include 'includes/Dependent.php';
+include 'includes/DependentView.php';
+
+$dependentView = new DependentView();
+$get_Ssn = $_GET["key"];
 
 //start session
 if (!isset($_SESSION)) {
     session_start();
 }
+
+$_SESSION['original_url'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
 ?>
 
 <!doctype html>
@@ -17,20 +30,30 @@ if (!isset($_SESSION)) {
 </head>
 
 <body>
-<div class='modal-content animate'>
+
+<h1 style="margin: 0 4rem 2rem 4rem">
+    Employees
+    <form id="dependent" action="Dependent.php" method="GET">
+    <span style="float: right; margin: 0 4rem;">
+        <?
+        echo "<button form='dependent' class='center' name='submit' onClick=\"document.location.href='Dependent.php'\" value=\"" . $get_Ssn . "\">Dependent</button>"
+        ?>
+    </span>
+    </form>
+</h1>
+
+<div class='modal-content animate' style="margin-bottom: 0px">
+
     <div class='container'>
         <h3>Edit Employee</h3>
         <!-- form to edit manager -->
-        <form id='editEmployeeForm' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <form id='editEmployeeForm' method="POST">
             <?
-
             $EditEmployee = new EmployeeView();
-            $get_Ssn = $_GET["key"];
-            $post_Ssn = $_POST["key"];
             if ($get_Ssn) {
                 $EditEmployee->showEditableEmployeeFields($get_Ssn);
-            } else if ($post_Ssn) {
-                $EditEmployee->showEditableEmployeeFields($post_Ssn);
+            } else if ($_POST["key"]) {
+                $EditEmployee->showEditableEmployeeFields($_POST["key"]);
             } else {
                 Header("Location:Manager.php");
 
@@ -40,16 +63,17 @@ if (!isset($_SESSION)) {
         </form>
         <button form='editEmployeeForm' name='key' value="987654321" type='submit'>Submit</button>
 
-        <button type='button' onclick="document.location.href='Employee.php'">Cancel</button>
+        <button type='button' onclick="document.location.href='Employee.php'" name="submitEdit">Cancel</button>
         <?
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $employee = new Employee();
-            $employee->updatedEmployee($_POST["ssn"], $_POST["edit_fname"], $_POST["edit_minit"], $_POST["edit_lname"], $_POST["edit_bdate"], $_POST["edit_address"], $_POST["edit_sex"], $_POST["edit_salary"], $_POST["edit_super_ssn"]);
-
+            $employee->updatedEmployee($_POST["ssn"], $_POST["edit_fname"], $_POST["edit_minit"], $_POST["edit_lname"], $_POST["edit_bdate"], $_POST["edit_address"], $_POST["edit_sex"], $_POST["edit_salary"], $_POST["edit_super_ssn"], $_POST["edit_department"]);
         }
         ?>
     </div>
 </div>
+
+
 </body>
 
 </html>

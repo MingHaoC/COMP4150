@@ -30,7 +30,6 @@ $managers = new ManagerView();
 
     <span style="float: right; margin: 0 4rem;">
         <button class="center" name="submit" onClick="document.location.href='index.php'">Home</button>
-        <button class="center" name="submit" onClick="document.location.href='Dependent.php'">Dependents</button>
         <button class="center" name="submit" onClick="document.location.href='Employee.php'">Employees</button>
         <button class="center" name="submit" onClick="document.location.href='Manager.php'">Managers</button>
         <button class="center" name="submit" onClick="document.location.href='Project.php'">Projects</button>

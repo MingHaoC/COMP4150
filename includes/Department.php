@@ -62,7 +62,6 @@ class Department extends DBConnection
 
         $dname = $request["Dname"];
         $dlocation = $request["Dlocation"];
-        // echo $request["manager"];
 
         $sql = "INSERT INTO UW_DEPARTMENT (Dname) VALUES ('$dname')";
         $result = $conn->query($sql);
@@ -93,20 +92,6 @@ class Department extends DBConnection
             return $row["Fname"] . " " . $row["Lname"];
         }
         return "";
-    }
-
-    /**
-     * @param $super_ssn
-     * @return array
-     */
-    public function getManager($super_ssn): array
-    {
-        $sql = "SELECT * FROM UW_EMPLOYEE WHERE Ssn = ". $super_ssn;
-        $result = $this->connect()->query($sql);
-        if ($result) {
-            return $result->fetch_assoc();
-        }
-        return [];
     }
 
     /**
