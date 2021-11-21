@@ -64,7 +64,6 @@ class ProjectView extends Project
         echo "<H4> You are editing Project: #". $project["Pnumber"] . " " . $project["Pname"]
             . "<span style='float: right;'>
                 <form id='editProjectEmployeesForm' action='Project_Employees_Edit.php' method='GET'></form>
-                <form id='editProjectEmployeesForm' action='Project_Employees_Edit.php' method='GET'></form>  
                     <button form='editProjectEmployeesForm' name='edit_ProjectEmployeesForm' type='submit' value=$pno >Project Employees</button>    
             </span></H4>";
 

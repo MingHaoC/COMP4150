@@ -95,22 +95,6 @@ class Department extends DBConnection
     }
 
     /**
-     * @return array
-     */
-    public function getAllManagersWithNoDepartment(): array
-    {
-        $sql = "select Fname, Minit, Lname, Ssn, Bdate, Address, Sex, Salary, super_ssn from UW_DEPARTMENT RIGHT JOIN UW_EMPLOYEE ON Ssn = Mgr_ssn WHERE Mgr_ssn IS NOT NULL";
-        $result = $this->connect()->query($sql);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $data[] = $row;
-            }
-            return $data;
-        }
-        return [];
-    }
-
-    /**
      * @param $dno department to be deleted
      *
      * a bucnh of fk constraints need to be deleted first
@@ -173,32 +157,6 @@ class Department extends DBConnection
         }
         return [];
 
-    }
-
-    /**
-     * @param $dno
-     * @return array
-     */
-    public function getDepartmentEmployees($dno): array
-    {
-
-        $sql = "SELECT * FROM UW_EMPLOYEE_DEPARTMENT WHERE Dnno = " . $dno;
-
-        $result = $this->connect()->query($sql);
-
-        if(!$result){
-            return [];
-        }
-
-        if ($result->num_rows > 0) {
-            // output data of each row
-            while ($row = $result->fetch_assoc()) {
-                $data[] = $row;
-            }
-            return $data;
-        } else {
-            return [];
-        }
     }
 
     /**
@@ -271,8 +229,32 @@ class Department extends DBConnection
 
     public function getEmployeesNotWorkingInDepartment($dno): array
     {
-        $sql = "SELECT * FROM UW_EMPLOYEE e LEFT JOIN UW_EMPLOYEE_DEPARTMENT d ON e.Ssn = d.Ssn WHERE Dnno != '$dno'";
-        $result = $this->connect()->query($sql);
+        $conn = $this->connect();
+
+        $sql1 = "SELECT GROUP_CONCAT(e.Ssn) AS ssn FROM UW_EMPLOYEE e LEFT JOIN UW_EMPLOYEE_DEPARTMENT d ON e.Ssn = d.Ssn WHERE Dnno = '$dno'";
+        $result = $conn->query($sql1);
+
+        $row = $result->fetch_assoc();
+
+        if (is_null($row["ssn"])) {
+
+            $sql = "SELECT * FROM UW_EMPLOYEE";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+                return $data;
+            }
+            return [];
+        }
+
+        $ssn = $row["ssn"];
+        $ssn = str_replace(",", " AND ssn != ", $ssn);
+        $sql2 = "SELECT * FROM UW_EMPLOYEE WHERE Ssn != $ssn";
+
+        $result = $conn->query($sql2);
+
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $data[] = $row;
@@ -280,7 +262,6 @@ class Department extends DBConnection
             return $data;
         }
         return [];
-
     }
 
     public function getEmployeesWorkingInDepartment($dno): array
@@ -310,17 +291,17 @@ class Department extends DBConnection
         $result = $conn->query($sql);
 
         echo '<script type="text/javascript">';
+
         if($result){
-            echo "alert('Employee #$Essn has been successfully added to Department #$Dno');";
+            echo "alert('Employee #$Essn has been successfully been added to Department #$Dno');";
         }else{
-            echo "alert(Error description: " . $conn -> error . ");";
+            echo "alert('Employee #$Essn has NOT been added to Department #$Dno');";
         }
         echo '</script>';
         Header('Location: ' . $_SERVER['PHP_SELF']);
     }
 
     public function removeEmployeeFromDepartment($request){
-
         $conn = $this->connect();
 
         $Essn = $request["Essn"];
@@ -331,9 +312,9 @@ class Department extends DBConnection
 
         echo '<script type="text/javascript">';
         if($result){
-            echo "alert('Employee #$Essn has been successfully removed from Department #$Dno');";
+            echo "alert('Employee #$Essn has been successfully removed from department #$Dno');";
         }else{
-            echo "alert(Error description: " . $conn -> error . ");";
+            echo "alert('Employee #$Essn has NOT been removed from Department #$Dno');";
         }
         echo '</script>';
         Header('Location: ' . $_SERVER['PHP_SELF']);

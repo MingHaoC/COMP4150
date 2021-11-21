@@ -34,18 +34,20 @@ $_SESSION['original_url'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 <h1 style="margin: 0 4rem 2rem 4rem">
     Employees
     <form id="dependent" action="Dependent.php" method="GET">
-    <span style="float: right; margin: 0 4rem;">
-        <?
-        echo "<button form='dependent' class='center' name='submit' onClick=\"document.location.href='Dependent.php'\" value=\"" . $get_Ssn . "\">Dependent</button>"
-        ?>
-    </span>
+
     </form>
 </h1>
 
 <div class='modal-content animate' style="margin-bottom: 0px">
 
     <div class='container'>
-        <h3>Edit Employee</h3>
+        <h3>Edit Employee
+            <span style="float: right; margin: 0 4rem;">
+                <?
+                echo "<button form='dependent' class='center' name='submit' onClick=\"document.location.href='Dependent.php'\" value=\"" . $get_Ssn . "\">Dependent</button>"
+                ?>
+            </span>
+        </h3>
         <!-- form to edit manager -->
 
         <form id='editEmployeeForm' method="POST">
