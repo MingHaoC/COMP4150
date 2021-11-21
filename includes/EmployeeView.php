@@ -12,9 +12,9 @@ class EmployeeView extends Employee
 
         echo "<form id='promoteUserForm' action='PromoteEmployee.php' method='GET'></form>";
         echo "<form id='deleteUserForm' method='POST'></form>";
-        echo "<form id='editManagerForm' action='Employee_edit.php' method='GET'>";
-        echo "<table id='manager' style='margin: 0 auto;'><tr><th>FName</th><th>M.Init</th><th>LName</th><th>SSN</th>
-              <th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Manager</th><th>Action</th></tr>";
+        echo "<form id='editEmployeeForm' action='Employee_edit.php' method='GET'>";
+        echo "<table id='manager' style='margin: 0 auto;'><tr><th>First Name</th><th>M.Init</th><th>Last Name</th><th>SSN</th>
+              <th>Bdate</th><th>Address</th><th>Sex</th><th>Salary</th><th>Department</th><th>Manager</th><th>Action</th></tr>";
 
         foreach ($datas as $data) {
             // output data of each row
@@ -28,10 +28,11 @@ class EmployeeView extends Employee
                 "<td>" . $data["Address"] . "</td>" .
                 "<td>" . $data["Sex"] . "</td>" .
                 "<td>" . $data["Salary"] . "</td>" .
+                "<td>" . $this->getDepartmentName($data["Dnno"]) . "</td>" .
                 "<td>" . $this->getManagerName($data["super_ssn"]) . "</td>" .
                 "<td>
 
-                    <button type='submit' form='editManagerForm' name='key' value=" . $data["Ssn"] . ">Edit</button>
+                    <button type='submit' form='editEmployeeForm' name='key' value=" . $data["Ssn"] . ">Edit</button>
                     <button type='submit' form='promoteUserForm' name='promote' value=" . $data["Ssn"] . " style='background-color: lightgreen'>Promote</button>
                     <button type='submit' form='deleteUserForm' name='delete' value=" . $data["Ssn"] . " style='background-color: lightcoral'>Delete</button>
                     </form>
@@ -61,7 +62,7 @@ class EmployeeView extends Employee
             <input type='text' name='Lname' placeholder='Last Name' required/>
             <input type='text' name='SSN' placeholder='SSN' required/>
             <input type='text' name='Password' placeholder='Password' required/>
-            <input type='text' name='Bdate' placeholder='Birthday' required/>
+            <input type='date' name='Bdate' placeholder='Birthday' required/>
             <input type='text' name='Address' placeholder='Address' required/>
             <input type='text' name='Sex' placeholder='Sex' required/>
             <input type='text' name='Salary' placeholder='Salary' required/><br>";
@@ -119,6 +120,9 @@ class EmployeeView extends Employee
     {
         $data = $this->getEmployee($ssn);
         $managers = $this->getAllManager();
+
+        $Department = new Department();
+        $departments = $Department->getAllDepartments();
         echo "<H4> You are editing User: <input name='ssn'
                                               readonly='readonly'
                                               style='border: 0; background-color: white; font-weight: bold; margin-bottom: 0'
@@ -136,7 +140,14 @@ class EmployeeView extends Employee
                 echo "<option selected='selected' value='" . $manager['Mgr_ssn'] . "'>" . $manager["Name"] . "</option>";
             else
                 echo "<option value='" . $manager['Mgr_ssn'] . "'>" . $manager["Name"] . "</option>";
-        echo "</select></Lable>";
+        echo "</select></Lable><br><br>";
+        echo "<Lable>Department: <select name='edit_department' id='department'>";
+        foreach ($departments as $department)
+            if ($data['Dnno'] == $department["Dnumber"])
+                echo "<option selected='selected' value='" . $department['Dnumber'] . "'>" . $department["Dname"] . "</option>";
+            else
+                echo "<option value='" . $department['Dnumber'] . "'>" . $department["Dname"] . "</option>";
+        echo "</select></Lable><br><br>";
     }
 
 }

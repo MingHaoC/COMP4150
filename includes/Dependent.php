@@ -2,31 +2,46 @@
 
 class Dependent extends DBConnection
 {
-
-    protected function getAllDependents()
+    protected function getUserDependents($ssn)
     {
-        $sql = "SELECT * FROM UW_DEPENDENT";
-        $result = $this->connect()->query($sql);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $data[] = $row;
-            }
-            return $data;
-        }
-        return [];
-
+        $sql = "SELECT * FROM UW_DEPENDENT WHERE Ssn = $ssn";
+        return $this->getStarQuery($sql);
     }
 
-    public function getDependee($DependentID){
-        $sql = "SELECT * FROM UW_EMPLOYEE WHERE Ssn = (SELECT Ssn FROM UW_EMPLOYEE_DEPENDENT 
-                WHERE DependentID = ". $DependentID .")";
-        $result = $this->connect()->query($sql);
-        if ($result->num_rows > 0) {
-            if($row = $result->fetch_assoc()) {
-                return $row["Fname"] . " " . $row["Lname"];
-            }
+    protected function executeAddDependent($ssn, $dependentName, $sex, $birthday, $relationship): bool
+    {
+        $sql = "INSERT INTO UW_DEPENDENT (Dependent_name, Sex, Bdate, Relationship, Ssn) VALUES (?, ?, ?, ?, ?)";
+
+        $db = $this->connect();
+        if (!($stmt = $db->prepare($sql)))
+            echo "Prepare failed: ";
+        if (!($stmt->bind_param("sssss", $dependentName, $sex, $birthday, $relationship, $ssn)))
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            return false;
         }
-        return "N/A";
+        $stmt->close();
+        $db->close();
+        return true;
+    }
+
+    protected function executeDeleteDependent($dependent_id): bool
+    {
+        $sql = "Delete FROM UW_DEPENDENT WHERE Dependent_id = ?";
+        $db = $this->connect();
+        if (!($stmt = $db->prepare($sql)))
+            echo "Prepare failed: ";
+        if (!($stmt->bind_param("i", $dependent_id)))
+            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+        if (!$stmt->execute()) {
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            return false;
+        }
+        $stmt->close();
+        $db->close();
+
+        return true;
     }
 
 }
