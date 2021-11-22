@@ -66,8 +66,7 @@ $get_Ssn = $_GET["key"];
             ?>
 
         </form>
-        <button form='editEmployeeForm' name='key' value="987654321" type='submit'>Submit</button>
-
+        <button form='editEmployeeForm' name='key' type='submit'>Submit</button>
 
         <button type='button' onclick="document.location.href='Employee.php'" name="submitEdit">Cancel</button>
         <?
