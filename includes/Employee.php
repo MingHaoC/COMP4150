@@ -131,10 +131,12 @@ class Employee extends DBConnection
     {
         $sql = "Select * from UW_EMPLOYEE WHERE Ssn = '$ssn' AND Password = '$password'";
         $result = $this->connect()->query($sql);
-        if ($result->num_rows > 0)
-            header("Location:index.php");
-        else
+        if ($result->num_rows > 0) {
+            return true;
+        } else {
             echo "<h2 style='color: #bb0a0a;text-align: center;'> Error: You have enter an invalid credentials </h2>";
+            return false;
+        }
     }
 
     /**

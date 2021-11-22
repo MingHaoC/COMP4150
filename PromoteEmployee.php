@@ -5,6 +5,13 @@ include 'includes/DepartmentView.php';
 include 'includes/Manager.php';
 include 'includes/ManagerView.php';
 
+//start session
+if (!isset($_SESSION)) {
+    session_start();
+    if($_SESSION["login"] != 1)
+        header("Location:Login.php");
+}
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);

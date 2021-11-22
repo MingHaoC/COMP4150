@@ -103,7 +103,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ssn = $_POST["ssn"];
     $password = $_POST["password"];
     if ($ssn && $password)
-        $employee->login($ssn, $password);
+        if($employee->login($ssn, $password)) {
+            $_SESSION['login'] = true;
+            header("Location:index.php");
+        }
 }
 
 ?>

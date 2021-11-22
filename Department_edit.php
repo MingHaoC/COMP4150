@@ -4,14 +4,16 @@ require_once "includes/DBConnection.php";
 require_once "includes/Department.php";
 require_once "includes/DepartmentView.php";
 
+if (!isset($_SESSION)) {
+    session_start();
+    if ($_SESSION["login"] != 1)
+        header("Location:Login.php");
+}
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//start session
-if (!isset($_SESSION)) {
-    session_start();
-}
 
 $department = new DepartmentView();
 

@@ -1,9 +1,11 @@
 <?php
 
-if(!isset($_SESSION)){
+//start session
+if (!isset($_SESSION)) {
     session_start();
+    if($_SESSION["login"] != 1)
+        header("Location:Login.php");
 }
-
 ?>
 
 <!doctype html>
@@ -22,7 +24,12 @@ if(!isset($_SESSION)){
     <hr/>
 </h1>
 
+
+
+
+<?php if ($_SESSION['login']): ?>
 <div style="width: 50%; margin: 2rem auto;">
+
     <h2>
         Phase 3 Submission. Each button brings you to the appropriate tables.
     </h2>
@@ -58,8 +65,12 @@ if(!isset($_SESSION)){
         </div>
 
     </div>
-
-
+    <?php else: ?>
+        <div>
+            <h3>Please signin</h3>
+            <Button onClick="document.location.href='Login.php'">Login</Button>
+        </div>
+    <?php endif; ?>
 </div>
 
 </body>

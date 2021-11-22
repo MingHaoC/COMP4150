@@ -4,6 +4,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//start session
+if (!isset($_SESSION)) {
+    session_start();
+    if($_SESSION["login"] != 1)
+        header("Location:Login.php");
+}
+
 include 'includes/DBConnection.php';
 include 'includes/Employee.php';
 include 'includes/EmployeeView.php';
@@ -13,12 +20,7 @@ include 'includes/DependentView.php';
 $dependentView = new DependentView();
 $get_Ssn = $_GET["key"];
 
-//start session
-if (!isset($_SESSION)) {
-    session_start();
-}
 
-$_SESSION['original_url'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 ?>
 

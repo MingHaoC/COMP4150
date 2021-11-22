@@ -8,13 +8,20 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$department = new DepartmentView();
-
-if (isset($_GET['edit_deptLocations'])) {
-    $dno = $_GET['edit_deptLocations'];
-} else {
-    Header("Location:Department.php");
+//start session
+if (!isset($_SESSION)) {
+    session_start();
+    if ($_SESSION["login"] != 1)
+        header("Location:Login.php");
 }
+
+if (isset($_GET['edit_deptLocations']))
+    $dno = $_GET['edit_deptLocations'];
+else
+    Header("Location:Department.php");
+
+
+$department = new DepartmentView();
 
 ?>
 

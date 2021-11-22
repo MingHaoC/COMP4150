@@ -11,6 +11,8 @@ error_reporting(E_ALL);
 //start session
 if (!isset($_SESSION)) {
     session_start();
+    if ($_SESSION["login"] != 1)
+        header("Location:Login.php");
 }
 
 $department = new DepartmentView();

@@ -17,6 +17,8 @@ $get_Ssn = $_GET["key"];
 //start session
 if (!isset($_SESSION)) {
     session_start();
+    if($_SESSION["login"] != 1)
+        header("Location:Login.php");
 }
 
 $_SESSION['original_url'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";

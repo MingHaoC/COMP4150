@@ -8,6 +8,8 @@ include 'includes/DepartmentView.php';
 
 if (!isset($_SESSION)) {
     session_start();
+    if ($_SESSION["login"] != 1)
+        header("Location:Login.php");
 }
 
 $departments = new DepartmentView();
