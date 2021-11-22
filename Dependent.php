@@ -13,8 +13,9 @@ include 'includes/DependentView.php';
 $dependentView = new DependentView();
 $get_Ssn = $_GET["submit"];
 
-if (!isset($_SESSION)) {
+if (!isset($_SESSION) || $_SESSION['login']) {
     session_start();
+    header("Location:Login.php");
 }
 
 ?>

@@ -8,6 +8,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+if (!isset($_SESSION) || $_SESSION['login']) {
+    session_start();
+    header("Location:Login.php");
+}
 
 $project = new ProjectView();
 

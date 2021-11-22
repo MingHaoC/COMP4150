@@ -16,6 +16,11 @@ if (isset($_GET['edit_deptLocations'])) {
     Header("Location:Department.php");
 }
 
+if (!isset($_SESSION) || $_SESSION['login']) {
+    session_start();
+    header("Location:Login.php");
+}
+
 ?>
 
 <!doctype html>

@@ -6,10 +6,10 @@ require 'includes/DepartmentView.php';
 require 'includes/Manager.php';
 require 'includes/ManagerView.php';
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION) || $_SESSION['login']) {
     session_start();
+    header("Location:Login.php");
 }
-
 $departments = new DepartmentView();
 $managers = new ManagerView();
 ?>

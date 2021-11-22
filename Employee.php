@@ -3,8 +3,9 @@ require "includes/DBConnection.php";
 require "includes/Employee.php";
 require "includes/EmployeeView.php";
 
-if (!isset($_SESSION)) {
+if (!isset($_SESSION) || $_SESSION['login']) {
     session_start();
+    header("Location:Login.php");
 }
 $employeeView = new EmployeeView();
 ?>

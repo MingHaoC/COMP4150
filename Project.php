@@ -6,10 +6,10 @@ include 'includes/ProjectView.php';
 include 'includes/Department.php';
 include 'includes/DepartmentView.php';
 
-if (!isset($_SESSION)) {
+if (!isset($_SESSION) || $_SESSION['login']) {
     session_start();
+    header("Location:Login.php");
 }
-
 $departments = new DepartmentView();
 $projects = new ProjectView();
 

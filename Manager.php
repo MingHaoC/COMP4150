@@ -2,8 +2,9 @@
 include 'includes/DBConnection.php';
 include 'includes/Manager.php';
 include 'includes/ManagerView.php';
-if (!isset($_SESSION)) {
+if (!isset($_SESSION) || $_SESSION['login']) {
     session_start();
+    header("Location:Login.php");
 }
 ?>
 <!doctype html>
