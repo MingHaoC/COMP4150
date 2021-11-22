@@ -1,15 +1,16 @@
 <?php
-
 require 'includes/DBConnection.php';
 require 'includes/Department.php';
 require 'includes/DepartmentView.php';
 require 'includes/Manager.php';
 require 'includes/ManagerView.php';
 
-if (!isset($_SESSION) || $_SESSION['login']) {
+if (!isset($_SESSION)) {
     session_start();
-    header("Location:Login.php");
+    if ($_SESSION["login"] != 1)
+        header("Location:Login.php");
 }
+
 $departments = new DepartmentView();
 $managers = new ManagerView();
 ?>

@@ -9,9 +9,11 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 //start session
-if (!isset($_SESSION) || $_SESSION['login']) {
+//start session
+if (!isset($_SESSION)) {
     session_start();
-    header("Location:Login.php");
+    if($_SESSION["login"] != 1)
+        header("Location:Login.php");
 }
 
 $project = new ProjectView();
