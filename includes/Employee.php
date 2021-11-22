@@ -90,7 +90,7 @@ class Employee extends DBConnection
 
         echo '<script type="text/javascript">';
         echo "alert('Employee with $ssn has been successfully updated');";
-        echo 'window.location.href = "Manager.php";';
+        echo 'window.location.href = "Employee.php";';
         echo '</script>';
 
     }

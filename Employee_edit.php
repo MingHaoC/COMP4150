@@ -7,9 +7,11 @@ error_reporting(E_ALL);
 //start session
 if (!isset($_SESSION)) {
     session_start();
-    if($_SESSION["login"] != 1)
+    $_SESSION['original_url'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    if ($_SESSION["login"] != 1)
         header("Location:Login.php");
 }
+
 
 include 'includes/DBConnection.php';
 include 'includes/Employee.php';
@@ -19,8 +21,6 @@ include 'includes/DependentView.php';
 
 $dependentView = new DependentView();
 $get_Ssn = $_GET["key"];
-
-
 
 ?>
 
@@ -66,14 +66,15 @@ $get_Ssn = $_GET["key"];
             ?>
 
         </form>
-        <button form='editEmployeeForm' name='key' value="987654321" type='submit'>Submit</button>
+
+        <button form='editEmployeeForm' name='key' value="$get_Ssn" type='submit'>Submit</button>
 
 
         <button type='button' onclick="document.location.href='Employee.php'" name="submitEdit">Cancel</button>
         <?
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $employee = new Employee();
-            $employee->updatedEmployee($_POST["ssn"], $_POST["edit_fname"], $_POST["edit_minit"], $_POST["edit_lname"], $_POST["edit_bdate"], $_POST["edit_address"], $_POST["edit_sex"], $_POST["edit_salary"], $_POST["edit_super_ssn"], $_POST["edit_department"]);
+            $employee->updatedEmployee($_POST["key"], $_POST["edit_fname"], $_POST["edit_minit"], $_POST["edit_lname"], $_POST["edit_bdate"], $_POST["edit_address"], $_POST["edit_sex"], $_POST["edit_salary"], $_POST["edit_super_ssn"], $_POST["edit_department"]);
         }
         ?>
     </div>
