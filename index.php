@@ -36,28 +36,28 @@ if (!isset($_SESSION)) {
 
     <div class="row">
 
-        <div class="column" style="width: 20%;">
+        <div class="column" style="width: 25%;">
             <div id="buttonToDepartments" onClick="document.location.href='Department.php'"
                  style="border: 1px solid #000; margin: 1rem; border-radius: 1rem; cursor: pointer;">
                 <h3>Departments</h3>
             </div>
         </div>
 
-        <div class="column" style="width: 20%;">
+        <div class="column" style="width: 25%;">
             <div id="buttonToEmployees" onClick="document.location.href='Employee.php'"
                  style="border: 1px solid #000; margin: 1rem; border-radius: 1rem; cursor: pointer;">
                 <h3>Employees</h3>
             </div>
         </div>
 
-        <div class="column" style="width: 20%; ">
+        <div class="column" style="width: 25%;">
             <div id="buttonToManagers" onClick="document.location.href='Manager.php'"
                  style="border: 1px solid #000; margin: 1rem; border-radius: 1rem; cursor: pointer;">
                 <h3>Managers</h3>
             </div>
         </div>
 
-        <div class="column" style="width: 20%;">
+        <div class="column" style="width: 25%;">
             <div id="buttonToProjects" onClick="document.location.href='Project.php'"
                  style="border: 1px solid #000; margin: 1rem; border-radius: 1rem; cursor: pointer;">
                 <h3>Projects</h3>
