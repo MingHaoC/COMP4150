@@ -71,7 +71,7 @@ $managers = new ManagerView();
         ?>
     </div>
 
-    <div class="column" style="width: 25%;">
+    <div class="column" style="width: 20%;">
         <h3>Department Locations</h3>
         <?php
         $departments->showAllDepartmentLocations();
