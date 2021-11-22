@@ -69,7 +69,6 @@ $get_Ssn = $_GET["key"];
 
         <button form='editEmployeeForm' name='key' value="$get_Ssn" type='submit'>Submit</button>
 
-
         <button type='button' onclick="document.location.href='Employee.php'" name="submitEdit">Cancel</button>
         <?
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
