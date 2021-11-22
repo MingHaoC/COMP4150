@@ -41,7 +41,7 @@ if(isset($_GET['edit_ProjectEmployeesForm'])){
                 </button>
             </h3>
 
-            <div class="column" style="width: 46%; margin: 0 1rem;">
+            <div class="column" style="width: 45%; margin: 0 1rem;">
 
                 <?php
 
@@ -68,7 +68,7 @@ if(isset($_GET['edit_ProjectEmployeesForm'])){
 
             </div>
 
-            <div class="column" style="width: 48%; margin: 0 1rem;">
+            <div class="column" style="width: 45%; margin: 0 1rem;">
 
                 <?php
 
